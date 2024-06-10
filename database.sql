@@ -27,16 +27,16 @@ DROP TABLE IF EXISTS `comentarios`;
 CREATE TABLE `comentarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idProducto` int(10) unsigned DEFAULT NULL,
-  `idAutor` int(10) unsigned DEFAULT NULL,
+  `idUsuario` int(10) unsigned DEFAULT NULL,
   `comentario` varchar(250) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deletedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `idProducto` (`idProducto`),
-  KEY `idAutor` (`idAutor`),
+  KEY `idUsuario` (`idUsuario`),
   CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`id`),
-  CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`idAutor`) REFERENCES `usuarios` (`id`)
+  CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -92,6 +92,7 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(250) NOT NULL,
+  `usuario` varchar(250) NOT NULL,
   `contrasenia` varchar(250) NOT NULL,
   `fecha` date NOT NULL,
   `dni` int(11) NOT NULL,
@@ -109,7 +110,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (7,'juanqueirolocuchuttini@gmail.com','Juanchi','1999-12-15',42255481,'cristiano.jpg','2024-04-22 23:04:04','2024-04-22 23:04:04','2024-04-22 23:04:04'),(10,'juanqueirolocuchuttini@gmail.com','Juanchi','1999-12-15',42255481,'cristiano.jpg','2024-04-22 23:04:58','2024-04-22 23:04:58','2024-04-22 23:04:58'),(11,'juanqueirolocuchuttini@gmail.com','Juanchi','1999-12-15',42255481,'cristiano.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(12,'nanoalonso@gmail.com','magic33','1981-07-29',33333333,'nano.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(13,'Javier@gmail.com','magic333','1986-09-20',33333334,'javier.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(14,'Tomasgarcia@gmail.com','tomas1234','2005-01-05',46572133,'ruta/a/la/foto.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(15,'Juangarcia@gmail.com','juan567','2009-09-02',46570193,'ruta/a/la/foto.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45');
+INSERT INTO `usuarios` VALUES (7,'juanqueirolocuchuttini@gmail.com','Cruz','juancruz','1999-12-15',42255481,'cristiano.jpg','2024-04-22 23:04:04','2024-04-22 23:04:04','2024-04-22 23:04:04'),(12,'nanoalonso@gmail.com','Fernando','magic33','1981-07-29',33333333,'nano.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(13,'Javier@gmail.com','Javier','libertad','1986-09-20',33333334,'javier.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(14,'Tomasgarcia@gmail.com','Tomasgarci','tomas1234','2005-01-05',46572133,'ruta/a/la/foto.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45'),(15,'Euge@gmail.com','Euge','Euge1','2009-09-02',46570193,'ruta/a/la/foto.jpg','2024-04-22 23:08:45','2024-04-22 23:08:45','2024-04-22 23:08:45');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 

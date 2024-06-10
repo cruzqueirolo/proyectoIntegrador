@@ -13,10 +13,29 @@ const usersController = {
       })
    },
    profile: function(req,res){
-      res.render("profile",{
-         title: "Laurent Watches",
-         id: req.params.id
-      })
+      // res.render("profile",{
+      //    title: "Laurent Watches",
+      //    id: req.params.id
+      // })
+      const id = req.params.id;
+      db.User.findByPk(id)
+          .then(function(user) {
+              if (user) {
+                  res.render("profile", {
+                      title: "Laurent Watches",
+                      user: user,
+                      index: [{ usuario: user.email }] // Pass the user data here
+                  });
+                  console.log(user);
+              } else {
+                  res.render("profile", {
+                      title: "Laurent Watches",
+                      user: null,
+                      error: "User not found"
+                  });
+              }
+          })
+
    },
 
    profileEdit: function(req,res){

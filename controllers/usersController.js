@@ -1,7 +1,7 @@
 const db = require("../database/models")
-index = db.usuarios
 
 const usersController = {
+   
    register: function(req, res) {
       res.render('register', {
          title: 'Laurent Watches'
@@ -13,31 +13,22 @@ const usersController = {
       })
    },
    profile: function(req,res){
-      // res.render("profile",{
-      //    title: "Laurent Watches",
-      //    id: req.params.id
-      // })
-      const id = req.params.id;
-      db.User.findByPk(id)
-          .then(function(user) {
-              if (user) {
-                  res.render("profile", {
-                      title: "Laurent Watches",
-                      user: user,
-                      index: [{ usuario: user.email }] // Pass the user data here
-                  });
-                  console.log(user);
-              } else {
-                  res.render("profile", {
-                      title: "Laurent Watches",
-                      user: null,
-                      error: "User not found"
-                  });
-              }
-          })
+      id = req.params.id
+      const usuario = req.query.usuario;
+      const contrasenia = req.query.contrasenia;
 
+      db.Usuarios.findOne({
+         where: {
+            usuario: usuario,
+            contrasenia: contrasenia
+         }
+      })
+      .then(function(data){
+         res.render("profile",{user:data})
+         console.log(data)
+      })
+         
    },
-
    profileEdit: function(req,res){
       res.render("profile-edit",{
          title:"Laurent Watches"

@@ -1,52 +1,49 @@
-module.exports = function(sequelize, DataTypes) {
-    let alias = "User";
+module.exports = function(sequelize, dataTypes) {
+   
+    let alias = "Usuarios";
     
     let cols = {
         id: {
             autoIncrement: true,
             primaryKey: true,
-            type: DataTypes.INTEGER
+            type: dataTypes.INTEGER
         },
         email: {
-            type: DataTypes.STRING
+            type: dataTypes.STRING
+        },
+        usuario:{
+            type: dataTypes.STRING
         },
         contrasenia: {
-            type: DataTypes.STRING
+            type: dataTypes.STRING
         },
         fecha: {
-            type: DataTypes.DATE,
+            type: dataTypes.DATE,
         },
         dni: {
-            type: DataTypes.INTEGER
+            type: dataTypes.INTEGER
         },
         fotoPerfil: {
-            type: DataTypes.STRING
+            type: dataTypes.STRING
         },
         createdAt: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            field: 'created_at'
+            type: dataTypes.DATE
         },
         updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            field: 'updated_at'
+            type: dataTypes.DATE
         },
         deletedAt: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            field: 'deleted_at'
+            type: dataTypes.DATE
         }
     };
 
     let config = {
         tableName: "usuarios",
         timestamps: true, // This ensures createdAt, updatedAt, and deletedAt are handled automatically
-        underscored: true, // This ensures timestamps use snake_case instead of camelCase
-        paranoid: true // This ensures the deletedAt field is used for soft deletes
+        underscored: false
     };
 
-    const User = sequelize.define(alias, cols, config);
+    const Usuarios = sequelize.define(alias, cols, config);
 
     // User.associate = function(models) {
     //     User.hasMany(models.Producto, {
@@ -60,5 +57,5 @@ module.exports = function(sequelize, DataTypes) {
     //     });
     // }
 
-    return User;
+    return Usuarios;
 };

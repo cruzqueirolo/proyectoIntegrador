@@ -11,7 +11,8 @@
 			<div class="data-container col-6">
 				<div class="d-flex align-items-center ">
 					<h1 class="main-title">
-						<a href="/users/profile-edit">
+						<%= user.usuario %>
+						<a href="/users/profile-edit/<%= user.id %>">
 							<i class="fas fa-cog"></i>
 						</a>
 					</h1>
@@ -42,7 +43,7 @@
 					<section class="product-box">
 						<a href="/product/">
 							<figure class="product-box_image">
-								<img src= "../images/products/" alt="">
+								<img src= "../images/products" alt="">
 							</figure>
 							<article class="product-box_data">
 								<h2></h2>

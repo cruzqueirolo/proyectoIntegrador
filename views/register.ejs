@@ -11,7 +11,7 @@
 			</div>
 			<!-- Show the "ultimos" products -->
 			<h2 class="col-12"> 
-				<form action="/users/login" method="GET">
+				<form action="/users/register" method="POST">
 					<label for="email">Email:</label><br>
 					<input type="email" id="email" name="email" required><br>
 					
@@ -19,19 +19,21 @@
 					<input type="text" id="usuario" name="usuario" required><br>
 					
 					<label for="contraseña">Contraseña:</label><br>
-					<input type="password" id="contraseña" name="contraseña" required><br>
+					<input type="password" id="contrasenia" name="contrasenia" required><br>
 					
 					<label for="fechaNacimiento">Fecha de nacimiento:</label><br>
-					<input type="date" id="fechaNacimiento" name="fechaNacimiento" required><br>
+					<input type="date" id="fecha" name="fecha" required><br>
 					
 					<label for="nroDocumento">Número de documento:</label><br>
-					<input type="number" id="nroDocumento" name="nroDocumento" required><br><br>
+					<input type="number" id="dni" name="dni" required><br><br>
 					
 					<label for="fotoPerfil">Foto de perfil (URL):</label><br>
 					<input type="text" id="fotoPerfil" name="fotoPerfil"><br><br>
+
+					<button type="submit">Registrarse</button>
 					
 				</form>
-				<a href="/users/login"><input type="submit" value="Registrarse"></a>
+				
 			</h2>
 
 

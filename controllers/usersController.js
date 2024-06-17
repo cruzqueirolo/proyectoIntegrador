@@ -73,32 +73,26 @@ const usersController = {
        res.status(500).render("login", { errors: errors });
      });
  },
- 
+  logout:function(req,res){
+    req.session.destroy();
+    res.clearCookie("userId")
+    return res.redirect("/")
+ },
 
- profile: function(req, res) {
-   const usuario = req.query.usuario;
-   const contrasenia = req.query.contrasenia;
- 
-   db.usuarios.findOne({
-     where: {
-       usuario: usuario,
-       contrasenia: contrasenia
-     }
-   })
-   .then(function(user) {
-     if (user) {
-       res.render("profile", { user: user }); // Pasar el usuario a la vista
-     } else {
-       // Manejar el caso cuando no se encuentra el usuario
-       let errors = { mensaje: "Usuario no encontrado" };
-       res.render("profile", { errors: errors });
-     }
-   })
-   .catch(function(error) {
-     console.log(error);
-     let errors = { mensaje: "Error al buscar el usuario" };
-     res.render("profile", { errors: errors });
-   });
+  profile: function(req, res) {
+    const userId = req.params.id; // Get the user ID from the URL parameter
+
+    db.usuarios.findByPk(userId)
+        .then(function(user) {
+            if (user) {
+                res.render("profile", { user: user })
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+            let errors = { mensaje: "Error al buscar el usuario" };
+            res.render("profile", { errors: errors });
+        });
  },
  
 

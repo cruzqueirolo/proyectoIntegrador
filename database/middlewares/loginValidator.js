@@ -20,7 +20,7 @@ const loginValidator = [
                             if (!match) {
                                 return Promise.reject('Contraseña inválida');
                             }
-                            req.user = user; // Guardamos el usuario en la request si la contraseña es válida
+                            req.user = user; 
                             return true;
                         });
                 });

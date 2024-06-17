@@ -10,7 +10,10 @@
 				<h2 class="products-title">Ingresar</h2>
 		</div>
 			<!-- Show the "ultimos" products -->
-		<form action="/users/profile" method="GET" class="col-12">
+
+		X
+		<form action="/users/login" method="POST" class="col-12">
+	    
     		<h2>
         		<label for="usuario">Usuario:</label><br>
         		<input type="text" id="usuario" name="usuario" required><br>
@@ -20,8 +23,11 @@
         
         		<label for="recordarme">Recordarme:</label>
         		<input type="checkbox" id="recordarme"  name="recordarme"><br><br>
-
-				<input type="submit" value="Iniciar Sesion">
+				<% if (locals.errors) { %>
+					<div class="error-msg"><%= errors.mensaje %></div>
+				<% } %>  	 
+        
+				<button type="sumbit">Iniciar sesion</button>
     		</h2>
 			
 		</form>

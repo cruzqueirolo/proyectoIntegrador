@@ -40,15 +40,15 @@ const usersController = {
   },
 
   store_login: function(req, res) {
-   let email = req.body.email;
+   let usuario = req.body.usuario;
    let contrasenia = req.body.contrasenia;
  
    let coinciden = {
-     where: { email: email }
+     where: { usuario: usuario }
    };
  
    db.usuarios.findOne(coinciden) 
-     .then(function(result) {
+     .then( function(result) {
        if (result) { // Si se encontró un usuario
          let claveComparada = bcrypt.compareSync(contrasenia, result.contrasenia);
          if (claveComparada) {
@@ -57,7 +57,7 @@ const usersController = {
             res.cookie("id", result.dataValues.id, { maxAge: 1000 * 60 * 60 });
            }
             let id = req.session.user.id;
-            return res.redirect(`/profile/${id}`);
+            return res.redirect(`/users/profile/${id}`);
          } else {
            let errors = { mensaje: "La contraseña ingresada es incorrecta" };
            return res.render("login", { errors: errors });

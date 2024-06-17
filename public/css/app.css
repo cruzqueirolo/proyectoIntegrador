@@ -346,7 +346,9 @@ hr {
   padding: 15px;
   /* height: 100%; */
 }
-
+.error-msg{
+  color: red;
+}
 .product-detail-title {
   font-weight: 400;
   font-size: 2.8em;

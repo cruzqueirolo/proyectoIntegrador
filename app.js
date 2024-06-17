@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-let session = require("express-session");
+let session= require("express-session");
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,13 +22,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', indexRouter);
+app.use('/product', productRouter);
+app.use('/users', usersRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));`1`
+});
+
+app.use(cookieParser());
 app.use(session({
   secret: 'myapp',
   resave: false,
   saveUninitialized: true
 }));
 
-// Middleware to make session data available to all views
+// Middleware para hacer disponible los datos de sesión en todas las vistas
 app.use(function(req, res, next) {
   if (req.session.user != undefined) {
     res.locals.user = req.session.user;
@@ -35,14 +46,14 @@ app.use(function(req, res, next) {
   return next();
 });
 
-// Middleware to handle the cookie
+// Middleware para gestionar la cookie
 app.use(function(req, res, next) {
-  if (req.cookies.id != undefined && req.session.user == undefined) {
-    let idDeLaCookie = req.cookies.id;
+  if (req.cookies.userId != undefined && req.session.user == undefined) {
+    let idDeLaCookie = req.cookies.userId;
 
     db.User.findByPk(idDeLaCookie)
       .then(user => {
-        req.session.user = user; // Put the entire user instance into session.
+        req.session.user = user; // Poner en sesión toda la instancia del modelo.
         res.locals.user = user;
         return next();
       })
@@ -54,16 +65,6 @@ app.use(function(req, res, next) {
     return next();
   }
 });
-
-app.use('/', indexRouter);
-app.use('/product', productRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

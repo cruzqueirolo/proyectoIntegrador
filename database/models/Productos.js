@@ -9,7 +9,8 @@ module.exports = function (sequelize,dataTypes) {
             type: dataTypes.INTEGER
         },
         idUsuario:{
-            type: dataTypes.INTEGER
+            type: dataTypes.INTEGER,
+            foreignKey: true
         },
         nombreProducto:{
             type: dataTypes.STRING

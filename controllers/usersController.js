@@ -21,7 +21,7 @@ const usersController = {
       dni: info.dni,
       fotoPerfil: info.fotoPerfil
     };
-    db.usuarios.create(usuario) 
+    db.Usuarios.create(usuario) 
       .then(() => {
         return res.redirect("/users/login");
       })
@@ -47,7 +47,7 @@ const usersController = {
      where: { usuario: usuario }
    };
  
-   db.usuarios.findOne(coinciden) 
+   db.Usuarios.findOne(coinciden) 
      .then( function(result) {
        if (result) { // Si se encontró un usuario
          let claveComparada = bcrypt.compareSync(contrasenia, result.contrasenia);
@@ -82,10 +82,14 @@ const usersController = {
   profile: function(req, res) {
     const userId = req.params.id; // Get the user ID from the URL parameter
 
-    db.usuarios.findByPk(userId)
+    db.Usuarios.findByPk(userId,{
+      include: [
+          { association: 'productos'}
+      ]
+    })  
         .then(function(user) {
             if (user) {
-                res.render("profile", { user: user })
+              res.render("profile", { user: user })  
             }
         })
         .catch(function(error) {
@@ -93,6 +97,7 @@ const usersController = {
             let errors = { mensaje: "Error al buscar el usuario" };
             res.render("profile", { errors: errors });
         });
+
  },
  
 
@@ -100,7 +105,7 @@ const usersController = {
     const userId = req.params.id; // ID del usuario a editar
     const userData = req.body; // Datos actualizados del usuario
 
-    db.usuarios.update(userData, {
+    db.Usuarios.update(userData, {
       where: { id: userId }
     })
     .then(updatedUser => {

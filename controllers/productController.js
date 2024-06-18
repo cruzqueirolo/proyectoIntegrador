@@ -6,9 +6,9 @@ const productController = {
         id = req.params.id
 
         db.Productos.findByPk(id,{
-           /* include: [
+            include: [
                 { association: 'user'}
-            ]*/
+            ]
         })
             .then(function(data) {
                 res.render("product", {product: data})

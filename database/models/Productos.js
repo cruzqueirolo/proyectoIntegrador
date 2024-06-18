@@ -39,12 +39,12 @@ module.exports = function (sequelize,dataTypes) {
 
     const Productos = sequelize.define(alias,cols,config);
 
-    /*Product.associate = function(models){
-        Product.belongsTo(models.User,{
+    Productos.associate = function(models){
+        Productos.belongsTo(models.Usuarios,{
             as: "user",
             foreignKey: "idUsuario"
         })
-    };*/
+    };
 
     return Productos
 };

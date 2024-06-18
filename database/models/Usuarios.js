@@ -1,6 +1,6 @@
 module.exports = function(sequelize, dataTypes) {
    
-    let alias = "usuarios";
+    let alias = "Usuarios";
     
     let cols = {
         id: {
@@ -45,17 +45,17 @@ module.exports = function(sequelize, dataTypes) {
 
     const Usuarios = sequelize.define(alias, cols, config);
 
-    // User.associate = function(models) {
-    //     User.hasMany(models.Producto, {
-    //         as: "productos",
-    //         foreignKey: "idUsuario"
-    //     });
+    Usuarios.associate = function(models) {
+        Usuarios.hasMany(models.Productos, {
+            as: "productos",
+            foreignKey: "idUsuario"
+        });
 
-    //     User.hasMany(models.Comentario, {
-    //         as: "comentarios",
-    //         foreignKey: "idAutor"
-    //     });
-    // }
+        //Usuarios.hasMany(models.Comentario, {
+        //    as: "comentarios",
+        //    foreignKey: "idAutor"
+        //});
+    }
 
     return Usuarios;
 };

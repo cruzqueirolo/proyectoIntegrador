@@ -8,6 +8,7 @@ let session = require("express-session");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productRouter = require('./routes/product');
+const db = require('./database/models')
 
 var app = express();
 
@@ -20,10 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Session middleware should be used before any route handlers that need session access
 app.use(session({
-  secret: 'myapp',
+  secret: 'proyectont',
   resave: false,
   saveUninitialized: true
 }));
@@ -32,6 +31,7 @@ app.use(session({
 app.use(function(req, res, next) {
   if (req.session.user != undefined) {
     res.locals.user = req.session.user;
+    return next();
   }
   return next();
 });
@@ -47,10 +47,7 @@ app.use(function(req, res, next) {
         res.locals.user = user;
         return next();
       })
-      .catch(e => {
-        console.log(e);
-        return next();
-      });
+      .catch(e => {console.log(e)})
   } else {
     return next();
   }

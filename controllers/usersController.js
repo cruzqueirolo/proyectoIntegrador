@@ -6,12 +6,17 @@ const { validationResult } = require('express-validator');
 const usersController = {
 
   register: function(req, res) {
-    res.render('register', {
-      title: 'Laurent Watches'
-    });
-  },
-
+    res.render("register", {
+        errors: {},
+        oldData: {}
+    })
+},
   store_register: function(req, res) {
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("register", { errors: errors.mapped(), oldData: req.body });
+  }
     let info = req.body;
     let usuario = {
       email: info.email,

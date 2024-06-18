@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/usersController');
+const registerValidator = require('../middlewares/registerValidator');
 
 router.get('/register', usersController.register);
 
-router.post("/register",usersController.store_register);
+router.post("/register",registerValidator,usersController.store_register);
 
 
 router.get('/login',usersController.login);

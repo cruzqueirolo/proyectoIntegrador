@@ -39,7 +39,7 @@ const productController = {
 
         db.Productos.create(product)
         .then(() => {
-            return res.redirect("/users/profile");
+            return res.redirect("/users/profile/"+ req.session.user.id);
         })
         .catch(error => {
             console.error('Error al crear el producto:', error);

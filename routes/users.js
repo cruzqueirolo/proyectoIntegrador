@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const usersController = require('../controllers/usersController');
 const registerValidator = require('../middlewares/registerValidator');
+const profileEditValidator = require('../middlewares/profileEditValidator');
 
 router.get('/register', usersController.register);
 
@@ -12,8 +13,13 @@ router.get('/login',usersController.login);
 router.post("/login",usersController.store_login);
 router.get("/logout",usersController.logout)
 
-router.get("/profile-edit/:id",usersController.profileEdit)
+
 router.get("/profile/:id",usersController.profile);
+
+
+router.get('/edit/:id', usersController.editProfileForm);
+
+router.post('/edit/:id' ,usersController.profileEdit);
 
 
 module.exports = router;

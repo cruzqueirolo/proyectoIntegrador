@@ -104,34 +104,59 @@ const usersController = {
         });
 
  },
- 
+ profileEdit: function(req, res) {
+  // let errors = validationResult(req);
 
-  profileEdit: function(req, res) {
-    const userId = req.params.id; // ID del usuario a editar
-    const userData = req.body; // Datos actualizados del usuario
-
-    db.Usuarios.update(userData, {
-      where: { id: userId }
-    })
-    .then(updatedUser => {
-      if (updatedUser[0]) {
-        res.status(200).json({ success: true, message: 'Perfil actualizado exitosamente.' });
-      } else {
-        res.status(404).json({ success: false, message: 'Usuario no encontrado.' });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error al actualizar el perfil.' });
-    });
-  },
-
-  user: function(req, res) {
-    res.render("user", {
-      title: "Laurent Watches",
-      id: req.params.id
-    });
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).render("profile-edit", { errors: errors.mapped(), oldData: req.body, user: { id: req.params.id } });
+  // }
+  
+  const userId = req.params.id;
+  const userData = req.body;
+  
+  // Si el campo de contraseña está presente y no está vacío, hashéalo.
+  if (userData.contrasenia && userData.contrasenia.trim()) {
+    userData.contrasenia = bcrypt.hashSync(userData.contrasenia, 10);
+  } else {
+    delete userData.contrasenia;
   }
+
+  db.Usuarios.update(userData, {
+    where: { id: userId }
+  })
+  .then(() => {
+    return db.Usuarios.findByPk(userId);
+  })
+  .then(user => {
+    if (user) {
+      const successMessage = "Perfil actualizado correctamente";
+      res.render("profile-edit", { user: user, successMessage: successMessage });
+    } else {
+      res.status(404).send("Usuario no encontrado");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    res.status(500).send("Error al actualizar el perfil del usuario");
+  });
+},
+
+editProfileForm: function(req, res) {
+  const userId = req.params.id;
+
+  db.Usuarios.findByPk(userId)
+  .then(user => {
+    if (user) {
+      res.render("profile-edit", { user: user});
+    } else {
+      res.status(404).send("Usuario no encontrado");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    res.status(500).send("Error al cargar el formulario de edición del usuario");
+  });
+}
 };
 
 module.exports = usersController;

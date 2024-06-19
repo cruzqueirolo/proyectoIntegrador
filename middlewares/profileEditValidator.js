@@ -1,20 +1,12 @@
 const { body } = require("express-validator");
 const db = require('../database/models');
 
-const registerValidator = [
+const profileEditValidator = [
     body("email")
     .notEmpty()
     .withMessage("Debes completar este campo")
     .isEmail()
-    .withMessage("Debes escribir un email válido")
-    .custom(function (email) {
-        return db.Usuarios.findOne({ where: { email: email } })
-            .then(function (user) {
-                if (user) {
-                    return Promise.reject("El email ya está registrado");
-                }
-            });
-    }),
+    .withMessage("Debes escribir un email válido"),
 
     
     body("usuario")
@@ -32,4 +24,4 @@ const registerValidator = [
         .withMessage("La contraseña debe tener al menos 4 caracteres")
 ];
 
-module.exports = registerValidator;
+module.exports = profileEditValidator;

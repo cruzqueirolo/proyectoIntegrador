@@ -6,13 +6,13 @@
 	<section class="info-usuario container products-wrapper">
 		<div class="row">
 			<div class="img-container offset-3 col-2">
-				<img src="/images/users/<%= user.fotoPerfil %>" alt="<%= user.usuario %>" class="foto-perfil">
+				<img src="/images/user-default.png" alt="<%= user.usuario %>" class="foto-perfil">
 			</div>
 			<div class="data-container col-6">
 				<div class="d-flex align-items-center ">
 					<h1 class="main-title">
 						<%= user.usuario %>
-						<a href="/users/profile-edit/<%= user.id %>">
+						<a href="/users/edit/<%= user.id %>">
 							<i class="fas fa-cog"></i>
 						</a>
 					</h1>

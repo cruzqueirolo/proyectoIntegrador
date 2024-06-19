@@ -1,38 +1,66 @@
 <%- include('./partials/head') %>
-<body>
-	
-	<%- include('./partials/header') %>
-	
 
-	<!-- product detail -->
-	<div class="container products-wrapper">
-		<div class="d-flex align-items-center">
-			<h2 class="products-title"><%= product.nombreProducto %></h2> 
-			<p class="product-detail-description">
-				<a href="/product/add">Editar</a>
-			</p>
-		</div>
-		<div class="product-detail">
-			<div class="row">
-				<article class="col-12 col-lg-8 product-detail-info">
-					<img src="/images/products/<%= product.imagen %>" alt="<%= product.nombreProducto %>" class="product-detail-img">
+	<body>
+
+		<%- include('./partials/header') %>
+
+
+			<!-- product detail -->
+			<div class="container products-wrapper">
+				<div class="d-flex align-items-center">
+					<h2 class="products-title">
+						<%= product.nombreProducto %>
+					</h2>
 					<p class="product-detail-description">
-						<%= product.descripcion %></p>
-				</article>
-				<div class="col-12 col-lg-4">
-				<!-- ACA VAN LOS COMENTARIOS -->
-					<form class="form" action="" method="GET">
-						<input class="form-input" type="text" value="" placeholder="Agregar comentario">
-						<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
-					</form>
-					<hr>
-				</div>	
+						<a href="/product/add">Editar</a>
+					</p>
+				</div>
+				<div class="product-detail">
+					<div class="row">
+						<article class="col-12 col-lg-8 product-detail-info">
+							<img src="/images/products/<%= product.imagen %>" alt="<%= product.nombreProducto %>"
+								class="product-detail-img">
+							<p class="product-detail-description">
+								<%= product.descripcion %>
+							</p>
+						</article>
+						<div class="col-12 col-lg-4">
+							<!-- ACA VAN LOS COMENTARIOS -->
+							<h3>Comentarios</h3>
+							<% if (comentarios && comentarios.length> 0) { %>
+								<ul>
+									<% comentarios.forEach(function(comentario) { %>
+										<li class="product-detail-description">
+											<%= comentario.comentario %> -
+												<a href="/users/profile/<%= comentario.idUsuario %>">
+													<%= comentario.usuario %>
+												</a>
+										</li>
+										<% }); %>
+								</ul>
+								<% } else { %>
+									<p>No hay comentarios aún.</p>
+									<% } %>
+										<% if (user) { %>
+											<form class="form" action="/product/comment/add" method="POST">
+												<input type="hidden" name="productoId" value="<%= product.id %>">
+												<input class="form-input" type="text" name="comentario"
+													placeholder="Agregar comentario">
+												<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
+											</form>
+											<% } else { %>
+												<p class="product-detail-description">Debes estar <a
+														href="/login">logueado</a> para agregar comentarios.</p>
+												<% } %>
+													<hr>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	<!-- /product detail -->
+			<!-- /product detail -->
 
-<%- include('./partials/footer') %>
+			<%- include('./partials/footer') %>
 
-</body>	
-</html>
+	</body>
+
+	</html>

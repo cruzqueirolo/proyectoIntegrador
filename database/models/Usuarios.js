@@ -50,11 +50,10 @@ module.exports = function(sequelize, dataTypes) {
             as: "productos",
             foreignKey: "idUsuario"
         });
-
-        //Usuarios.hasMany(models.Comentario, {
-        //    as: "comentarios",
-        //    foreignKey: "idAutor"
-        //});
+        Usuarios.hasMany(models.Comentarios, {
+            foreignKey: 'idUsuario',
+            as: 'comentarios'
+        });
     }
 
     return Usuarios;

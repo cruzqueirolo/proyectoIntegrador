@@ -30,7 +30,7 @@ const productController = {
                     }));
                  console.log('Comentarios:', comentarios);
                 res.render("product", { product: data, comentarios, user: req.session.user });
-            });
+            })
     },
     add: function (req, res) {
         if (req.session.user == undefined) {
@@ -42,6 +42,11 @@ const productController = {
         }
     },
     store_add: function (req, res) {
+        let errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            return res.status(400).render("product-add", { errors: errors.mapped(), oldData: req.body });
+        }
         let info = req.body;
 
         console.log('Información recibida:', info);

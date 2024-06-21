@@ -16,11 +16,19 @@
 				<input type="file" id="imagen" name="imagen" accept="image/*"><br>
 				
 				<label for="nombreProducto">Nombre del producto:</label><br>
-				<input type="text" id="nombreProducto" name="nombreProducto"><br>
-				
+				<input type="text" id="nombreProducto" name="nombreProducto" value="<%= locals.oldData && oldData.nombreProducto ? oldData.nombreProducto : null %>"> <br>
+				<% if (locals.errors && errors.nombreProducto) { %>
+					<div class="error-msg"><%= errors.nombreProducto.msg %></div>
+				   <% } %>
+				   <br>
+
 				<label for="descripcion">Descripción:</label><br>
-				<textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea><br><br>
-				
+				<textarea id="descripcion" name="descripcion" rows="4" cols="50" value="<%= locals.oldData && oldData.descripcion ? oldData.descripcion : null %>"></textarea><br>
+				<% if (locals.errors && errors.descripcion) { %>
+					<div class="error-msg"><%= errors.descripcion.msg %></div>
+				   <% } %>
+				<br>
+
 				<button type="submit"> Agregar Producto </button>
 			</form>
 			</h2>

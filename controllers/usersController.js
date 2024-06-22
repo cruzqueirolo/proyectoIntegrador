@@ -89,12 +89,14 @@ const usersController = {
 
     db.Usuarios.findByPk(userId,{
       include: [
-          { association: 'productos'}
+          { association: 'productos'},
+          {association: 'comentarios'}
       ]
     })  
         .then(function(user) {
             if (user) {
-              res.render("profile", { user: user })  
+              res.render("profile", { user: user })
+              console.log(productos.comentarios)
             }
         })
         .catch(function(error) {

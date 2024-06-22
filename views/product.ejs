@@ -12,7 +12,7 @@
 						<%= product.nombreProducto %>
 					</h2>
 					<p class="product-detail-description">
-						<a href="/product/add">Editar</a>
+						<a href="/product/<%= product.id %>/edit">Editar</a>
 					</p>
 				</div>
 				<div class="product-detail">
@@ -31,28 +31,26 @@
 								<ul>
 									<% comentarios.forEach(function(comentario) { %>
 										<li class="product-detail-description">
-											<%= comentario.comentario %> -
-												<a href="/users/profile/<%= comentario.idUsuario %>">
-													<%= comentario.usuario %>
+											<a href="/users/profile/<%= comentario.idUsuario %>">
+													<%= comentario.usuario %> -
 												</a>
+											<%= comentario.comentario %> 
 										</li>
 										<% }); %>
 								</ul>
 								<% } else { %>
 									<p>No hay comentarios aún.</p>
+								<% } %>
+									<% if (user) { %>
+										<form class="form" action="/product/comment/add" method="POST">
+											<input type="hidden" name="productoId" value="<%= product.id %>">
+											<input class="form-input" type="text" name="comentario"
+												placeholder="Agregar comentario">
+											<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
+										</form>
+									<% } else { %>
+											<p class="product-detail-description">Debes estar <a href="/login">logueado</a> para agregar comentarios.</p>
 									<% } %>
-										<% if (user) { %>
-											<form class="form" action="/product/comment/add" method="POST">
-												<input type="hidden" name="productoId" value="<%= product.id %>">
-												<input class="form-input" type="text" name="comentario"
-													placeholder="Agregar comentario">
-												<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
-											</form>
-											<% } else { %>
-												<p class="product-detail-description">Debes estar <a
-														href="/login">logueado</a> para agregar comentarios.</p>
-												<% } %>
-													<hr>
 						</div>
 					</div>
 				</div>

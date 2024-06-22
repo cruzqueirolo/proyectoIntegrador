@@ -6,7 +6,11 @@
 	<section class="info-usuario container products-wrapper">
 		<div class="row">
 			<div class="img-container offset-3 col-2">
-				<img src="/images/user-default.png" alt="<%= user.usuario %>" class="foto-perfil">
+				<% if (user.fotoPerfil) { %>
+					<img src="/images/users/<%= user.fotoPerfil %>" alt="<%= user.usuario %>" class="foto-perfil">
+				<% } else { %> 
+					<img src="/images/users/user-default.png" alt="<%= user.usuario %>" class="foto-perfil">
+				<% } %>
 			</div>
 			<div class="data-container col-6">
 				<div class="d-flex align-items-center ">
@@ -47,7 +51,7 @@
 							<article class="product-box_data">
 								<h2><%= user.productos[i].nombreProducto %></h2>
 								<p><%= user.productos[i].descripcion %></p>
-								<p>Comentarios:</p>
+								<p>Comentarios: <%= user.productos[i].nombreProducto %></p>
 							</article>
 						</a>
 					</section>

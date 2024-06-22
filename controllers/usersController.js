@@ -90,26 +90,32 @@ store_register: function(req, res) {
     return res.redirect("/")
  },
 
-  profile: function(req, res) {
-    const userId = req.params.id; // Get the user ID from the URL parameter
+ profile: function(req, res) {
+  const userId = req.params.id; // Obtener el ID del usuario de la URL
+  const loggedInUserId = req.session.user.id; // Obtener el ID del usuario logueado de la sesión
 
-    db.Usuarios.findByPk(userId,{
+  if (userId != loggedInUserId) {
+      return res.status(403).send("No tienes permiso para acceder a este perfil");
+  }
+
+  db.Usuarios.findByPk(userId, {
       include: [
-          { association: 'productos'}
+          { association: 'productos' }
       ]
-    })  
-        .then(function(user) {
-            if (user) {
-              res.render("profile", { user: user })  
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-            let errors = { mensaje: "Error al buscar el usuario" };
-            res.render("profile", { errors: errors });
-        });
-
- },
+  })
+  .then(function(user) {
+      if (user) {
+          res.render("profile", { user: user });
+      } else {
+          res.status(404).send("Usuario no encontrado");
+      }
+  })
+  .catch(function(error) {
+      console.log(error);
+      let errors = { mensaje: "Error al buscar el usuario" };
+      res.status(500).render("profile", { errors: errors });
+  });
+},
  profileEdit: function(req, res) {
   // let errors = validationResult(req);
 
@@ -162,7 +168,27 @@ editProfileForm: function(req, res) {
     console.error(error);
     res.status(500).send("Error al cargar el formulario de edición del usuario");
   });
-}
-};
+},
+userNotLoged: function(req, res) {
+  const userId = req.params.id; 
 
+  db.Usuarios.findByPk(userId, {
+      include: [
+          { association: 'productos' }
+      ]
+  })
+  .then(function(user) {
+      if (user) {
+          res.render("user", { user: user }); 
+      } else {
+          res.status(404).send("Usuario no encontrado");
+      }
+  })
+  .catch(function(error) {
+      console.log(error);
+      let errors = { mensaje: "Error al buscar el usuario" };
+      res.status(500).render("user", { errors: errors });
+  });
+},
+}
 module.exports = usersController;

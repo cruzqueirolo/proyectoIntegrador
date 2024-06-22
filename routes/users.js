@@ -19,6 +19,9 @@ router.get("/logout",usersController.logout)
 
 router.get("/profile/:id",usersController.profile);
 
+router.get('/show/:id', usersController.userNotLoged);
+
+
 
 router.get('/edit/:id', usersController.editProfileForm);
 

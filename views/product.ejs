@@ -32,7 +32,7 @@
 									<% comentarios.forEach(function(comentario) { %>
 										<li class="product-detail-description">
 											<%= comentario.comentario %> -
-												<a href="/users/profile/<%= comentario.idUsuario %>">
+												<a href="/users/show/<%= comentario.idUsuario %>">
 													<%= comentario.usuario %>
 												</a>
 										</li>

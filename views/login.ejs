@@ -15,16 +15,20 @@
 	    
     		<h2>
         		<label for="usuario">Usuario:</label><br>
-        		<input type="text" id="usuario" name="usuario" required><br>
+        		<input type="text" id="usuario" name="usuario" value="<%= oldData.usuario ? oldData.usuario : '' %>"><br>
+				<% if (errors && errors.usuario) { %>
+					<p style="color: red;"><%= errors.usuario.msg %></p>
+				<% } %>
         
         		<label for="contrasenia">Contraseña:</label><br>
-        		<input type="password" id="contrasenia"  name="contrasenia" required><br>
+        		<input type="password" id="contrasenia"  name="contrasenia" ><br>
+				<% if (errors && errors.contrasenia) { %>
+					<p style="color: red;"><%= errors.contrasenia.msg %></p>
+				<% } %>
         
         		<label for="recordarme">Recordarme:</label>
         		<input type="checkbox" id="recordarme"  name="recordarme"><br><br>
-				<% if (locals.errors) { %>
-					<p style="color: red;"><%= errors.mensaje %></p>
-				<% } %>  	 
+					 
         
 				<button type="sumbit">Iniciar sesion</button>
     		</h2>

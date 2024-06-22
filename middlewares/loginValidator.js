@@ -1,30 +1,41 @@
 const { body } = require("express-validator");
 const db = require('../database/models');
 const bcrypt = require('bcryptjs');
-
 const loginValidator = [
-    body("email")
-        .notEmpty().withMessage("Debes completar este campo")
-        .isEmail().withMessage("Debes escribir un email válido"),
+    body('usuario')
+        .notEmpty().withMessage('Debes completar este campo')
+        .custom(function(value) {
+            return new Promise(function(resolve, reject) {
+                db.Usuarios.findOne({ where: { usuario: value } })
+                    .then(function(user) {
+                        if (!user) {
+                            reject('El usuario ingresado no existe');
+                        } else {
+                            resolve();
+                        }
+                    });
+            });
+        }),
 
-    body("password")
-        .notEmpty().withMessage("Debes completar este campo")
-        .custom((value, { req }) => {
-            return db.usuarios.findOne({ where: { email: req.body.email } })
-                .then(user => {
+    body('contrasenia')
+        .notEmpty().withMessage('Debes completar este campo')
+        .custom(function(value, { req }){
+            let usuario = req.body.usuario; 
+        
+            return db.Usuarios.findOne({ where: { usuario: usuario } })
+                .then(function(user) {
                     if (!user) {
-                        return Promise.reject('No existe el usuario');
+                        return bcrypt.compare(value, '')
                     }
-                    return bcrypt.compare(value, user.password)
-                        .then(match => {
+        
+                    return bcrypt.compare(value, user.contrasenia)
+                        .then(function(match) {
                             if (!match) {
-                                return Promise.reject('Contraseña inválida');
+                                return Promise.reject('Contraseña incorrecta');
                             }
-                            req.user = user; 
-                            return true;
                         });
-                });
-        })
+                })
+        }),
 ];
 
 module.exports = loginValidator;

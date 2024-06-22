@@ -13,10 +13,11 @@
 			<h2 class="col-12"> 
 				<form action="/users/register" method="POST">
 					<label for="email">Email:</label><br>
-					<input type="email" id="email" name="email" value="<%= oldData.email ? oldData.email : '' %>" ><br>
-					
-					
-					
+					<input type="email" id="email" name="email" value="<%= oldData ? oldData.email : '' %>"><br>
+					<% if (errors && errors.email) { %>
+						<p style="color: red;"><%= errors.email.msg %></p>
+					<% } %>
+						
 					<label for="usuario">Usuario:</label><br>
 					<input type="text" id="usuario" name="usuario" value="<%= oldData.usuario ? oldData.usuario : '' %>" ><br>
 					<% if (errors && errors.usuario) { %>

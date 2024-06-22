@@ -14,9 +14,12 @@ const indexController = {
     search: function (req,res){
         let infoABuscar = req.query.search;
         db.Productos.findAll({
-            where:[
-                {nombreProducto: {[op.like]: '%' + infoABuscar + '%'}}
-            ]
+            where: {
+                [op.or]: [
+                    { nombreProducto: {[op.like]: '%' + infoABuscar + '%'}},
+                    {descripcion: {[op.like]: '%' + infoABuscar + '%'}}
+                ]
+            }
         })
             .then(data => {
                 return res.render('search-results', {product: data});

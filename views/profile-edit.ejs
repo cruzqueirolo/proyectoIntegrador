@@ -10,7 +10,13 @@
 				<h2 class="products-title">Editar mi perfil</h2>
 			</div>
 			<!-- Show the "ultimos" products -->
-			
+			<!-- //no entendemos porque successMessage != undefined no funciona  -->
+			<% if (typeof successMessage !== "undefined") { %> 
+				<div class="alert-alert-success">
+				  <%= successMessage %>
+				</div>
+			  <% } %>
+			<br>
 			<div class="col-12">
 				<form action="/users/edit/<%= user.id %>" method="POST">
 				<label for="email">Email:</label><br>
@@ -31,11 +37,6 @@
 				<label for="fotoPerfil">Foto de perfil (URL):</label><br>
 				<input type="text" id="fotoPerfil" name="fotoPerfil" value="<%= user.fotoPerfil %>"><br><br>
 				<button type="submit">Guardar cambios</button>
-				<% if (typeof successMessage !== "undefined") { %>
-					<div class="alert alert-success">
-					  <%= successMessage %>
-					</div>
-				  <% } %>
 				
 			</form>
 			

@@ -31,8 +31,14 @@
 								<ul>
 									<% comentarios.forEach(function(comentario) { %>
 										<li class="product-detail-description">
+<<<<<<< HEAD
 											<a href="/users/profile/<%= comentario.idUsuario %>">
 													<%= comentario.usuario %> -
+=======
+											<%= comentario.comentario %> -
+												<a href="/users/show/<%= comentario.idUsuario %>">
+													<%= comentario.usuario %>
+>>>>>>> refs/remotes/origin/main
 												</a>
 											<%= comentario.comentario %> 
 										</li>

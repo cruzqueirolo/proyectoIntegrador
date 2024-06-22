@@ -336,7 +336,10 @@ hr {
   border-radius: 8px;
   overflow: hidden;
 }
-
+.alert-alert-success{
+  font-size: 15px;
+  margin-left: 13px;
+}
 .product-detail-img {
   width: 70%;
   display: block;

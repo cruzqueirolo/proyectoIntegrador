@@ -117,13 +117,25 @@ const productController = {
             }) 
     },
     addComment: function(req, res) {
-        let info = req.body;
-        
-        let comment = {
-            idUsuario: req.session.user.id,
-            idProducto: info.productoId,
-            comentario: info.comentario,
-        };
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            const info = req.body;
+            const comentarios = JSON.parse(info.comentarios);
+
+            return res.status(400).render('product', { 
+                product: { id: info.productoId, nombreProducto: info.productName, descripcion: info.productDescription, imagen: info.productImage }, 
+                comentarios: comentarios,
+                user: req.session.user, 
+                errors: errors.array() 
+            });
+        } else {
+            const info = req.body;
+            const comment = {
+                idUsuario: req.session.user.id,
+                idProducto: info.productoId,
+                comentario: info.comentario,
+            };
         
         db.Comentarios.create(comment)
             .then(() => {
@@ -162,6 +174,7 @@ const productController = {
                 console.log(error);
                 res.render("error", { mensaje: "Error al agregar el comentario" });
             });
+        }
     }
 };
 

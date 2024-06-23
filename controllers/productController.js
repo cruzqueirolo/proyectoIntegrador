@@ -27,7 +27,7 @@ const productController = {
                         ...comentario.dataValues,
                         usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
                     }));
-                res.render("product", { product: data, comentarios, user: req.session.user });
+                res.render("product", { product: data, comentarios, user: req.session.user , errors: []});
             })
     },
     add: function (req, res) {
@@ -124,7 +124,11 @@ const productController = {
             const comentarios = JSON.parse(info.comentarios);
 
             return res.status(400).render('product', { 
-                product: { id: info.productoId, nombreProducto: info.productName, descripcion: info.productDescription, imagen: info.productImage }, 
+                product: { 
+                    id: info.productoId, 
+                    nombreProducto: info.productName, 
+                    descripcion: info.productDescription, 
+                    imagen: info.productImage }, 
                 comentarios: comentarios,
                 user: req.session.user, 
                 errors: errors.array() 
@@ -136,44 +140,43 @@ const productController = {
                 idProducto: info.productoId,
                 comentario: info.comentario,
             };
-        
-        db.Comentarios.create(comment)
-            .then(() => {
-                return db.Productos.findByPk(info.productoId, {
-                    include: [
-                        { association: 'user' },
-                        {
-                            model: db.Comentarios,
-                            as: 'comentarios',
-                            include: [{
-                                model: db.Usuarios,
-                                as: 'usuario',
-                                attributes: ['usuario'] // Atributos que deseas obtener del usuario
-                            }],
-                            required: false
-                        }
-                    ]
+
+            db.Comentarios.create(comment)
+                .then(() => {
+                    return db.Productos.findByPk(info.productoId, {
+                        include: [
+                            { association: 'user' },
+                            {
+                                model: db.Comentarios,
+                                as: 'comentarios',
+                                include: [{
+                                    model: db.Usuarios,
+                                    as: 'usuario',
+                                    attributes: ['usuario']
+                                }],
+                                required: false
+                            }
+                        ]
+                    });
+                })
+                .then(product => {
+                    if (!product) {
+                        return res.status(404).render('error', { mensaje: 'Producto no encontrado' });
+                    }
+
+                    const comentarios = product.comentarios
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .map(comentario => ({
+                            ...comentario.dataValues,
+                            usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
+                        }));
+
+                    res.render('product', { product, comentarios, user: req.session.user, errors: [] });
+                })
+                .catch(error => {
+                    console.error('Error al agregar comentario:', error);
+                    res.status(500).render('error', { mensaje: 'Error al agregar el comentario' });
                 });
-            })
-            .then(product => {
-                if (!product) {
-                    return res.status(404).render("error", { mensaje: "Producto no encontrado" });
-                }
-                
-                const comentarios = product.comentarios
-                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    .map(comentario => ({
-                        ...comentario.dataValues,
-                        usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
-                    }));
-                
-                // Renderizar la vista del producto con los comentarios actualizados
-                res.render("product", { product, comentarios, user: req.session.user });
-            })
-            .catch(error => {
-                console.log(error);
-                res.render("error", { mensaje: "Error al agregar el comentario" });
-            });
         }
     }
 };

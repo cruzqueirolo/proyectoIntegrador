@@ -101,6 +101,21 @@ const productController = {
                 console.log(error)
             })
     },
+    destroy: function (req,res){
+        let productoABorrar = req.params.id
+        if (req.session.id == req.user.id)
+            db.Productos.destroy({
+            where:[
+                {id: productoABorrar}
+            ]
+        })
+            .then(()=>{
+                return res.redirect(`/users/profile/${id}`)
+            })
+            .catch(error =>{
+                console.log(error)
+            }) 
+    },
     addComment: function(req, res) {
         let info = req.body;
         

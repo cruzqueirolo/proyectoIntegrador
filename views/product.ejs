@@ -11,9 +11,14 @@
 					<h2 class="products-title">
 						<%= product.nombreProducto %>
 					</h2>
-					<p class="product-detail-description">
+				<ul class="productEdit">
+					<li class="product-detail-description">
 						<a href="/product/<%= product.id %>/edit">Editar</a>
-					</p>
+					</li>
+					<li class="product-detail-description">
+						<!--<a href="/product/destroy/<%= product.id %>">Eliminar</a> --> 
+					</li>
+				</ul>
 				</div>
 				<div class="product-detail">
 					<div class="row">
@@ -31,14 +36,8 @@
 								<ul>
 									<% comentarios.forEach(function(comentario) { %>
 										<li class="product-detail-description">
-<<<<<<< HEAD
-											<a href="/users/profile/<%= comentario.idUsuario %>">
+											<a href="/users/show/<%= comentario.idUsuario %>">
 													<%= comentario.usuario %> -
-=======
-											<%= comentario.comentario %> -
-												<a href="/users/show/<%= comentario.idUsuario %>">
-													<%= comentario.usuario %>
->>>>>>> refs/remotes/origin/main
 												</a>
 											<%= comentario.comentario %> 
 										</li>

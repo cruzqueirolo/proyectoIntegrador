@@ -9,6 +9,7 @@ router.post("/add",productAddValidator,productController.store_add)
 router.get("/:id/edit",productController.edit)
 router.post("/:id/update",productController.update)
 router.post("/comment/add", productController.addComment)
+router.post("/delete/:id",productController.destroy)
 router.get("/:id",productController.product)
 
 module.exports = router;

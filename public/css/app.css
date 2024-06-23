@@ -461,6 +461,13 @@ hr {
   font-size: 1.7em;
 }
 
+.productEdit{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /*====== Formularios ======*/
 .form-label {
   display: inline-block;

@@ -100,14 +100,26 @@ store_register: function(req, res) {
 
   db.Usuarios.findByPk(userId, {
       include: [
-          { association: 'productos'},
-          {association: 'comentarios'}
-      ]
-    })  
+          { association: 'productos',
+          include: [
+            {
+                model: db.Comentarios,
+                as: 'comentarios',
+                include: [
+                    {
+                        model: db.Usuarios,
+                        as: 'usuario',
+                        attributes: ['usuario']
+                    }
+                ]
+              }
+            ]
+          }
+        ]
+      })  
         .then(function(user) {
             if (user) {
               res.render("profile", { user: user })
-              console.log(productos.comentarios)
             }
         })
         .catch(function(error) {

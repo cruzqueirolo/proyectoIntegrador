@@ -4,10 +4,18 @@ indexProd = db.productos
 
 const indexController = {
     index: function(req,res){
-        db.Productos.findAll()
+        db.Productos.findAll({
+            order: [
+                ['createdAt','DESC']
+            ],
+            include: [
+                { association: 'comentarios' },
+            ]
+        })
         .then(function(data){
             res.render('index', { 
             product: data })
+            console.log(JSON.stringify(data,null,4))
         })
         
     },

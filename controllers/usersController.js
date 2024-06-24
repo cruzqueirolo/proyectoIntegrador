@@ -16,7 +16,7 @@ store_register: function(req, res) {
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        console.log(errors.mapped()); // Para depuración
+        console.log(errors.mapped()); 
         return res.render('register', { 
             errors: errors.mapped(), 
             oldData: req.body 
@@ -81,7 +81,7 @@ store_register: function(req, res) {
       }})
       .catch(function(error) {
         console.log(error);
-        res.status(500).send("Error interno del servidor"); // Mensaje de error genérico
+        res.status(500).send("Error interno del servidor"); 
       });
   },
   logout:function(req,res){
@@ -91,8 +91,8 @@ store_register: function(req, res) {
  },
 
  profile: function(req, res) {
-  const userId = req.params.id; // Obtener el ID del usuario de la URL
-  const loggedInUserId = req.session.user.id; // Obtener el ID del usuario logueado de la sesión
+  const userId = req.params.id; 
+  const loggedInUserId = req.session.user.id; 
 
   if (userId != loggedInUserId) {
       return res.status(403).send("No tienes permiso para acceder a este perfil");
@@ -100,7 +100,9 @@ store_register: function(req, res) {
 
   db.Usuarios.findByPk(userId, {
       include: [
+        
           { association: 'productos',
+            order: [['createdAt', 'DESC']],
           include: [
             {
                 model: db.Comentarios,
@@ -139,7 +141,7 @@ store_register: function(req, res) {
   const userId = req.params.id;
   const userData = req.body;
   
-  // Si el campo de contraseña está presente y no está vacío, hashéalo.
+  
   if (userData.contrasenia && userData.contrasenia.trim()) {
     userData.contrasenia = bcrypt.hashSync(userData.contrasenia, 10);
   } else {

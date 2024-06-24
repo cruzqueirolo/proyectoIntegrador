@@ -14,16 +14,20 @@
 			<form action="/product/add" method="POST">
 				<label for="imagen">Imagen:</label><br>
 				<input type="file" id="imagen" name="imagen" accept="image/*"><br>
+				<% if (locals.errors && errors.imagen) { %>
+					<div class="error-msg"><%= errors.imagen.msg %></div>
+				   <% } %>
+				   <br>
 				
 				<label for="nombreProducto">Nombre del producto:</label><br>
-				<input type="text" id="nombreProducto" name="nombreProducto" value="<%= locals.oldData && oldData.nombreProducto ? oldData.nombreProducto : null %>"> <br>
+				<input type="text" id="nombreProducto" name="nombreProducto" value="<%= locals.oldData && oldData.nombreProducto ? oldData.nombreProducto : "" %>"> <br>
 				<% if (locals.errors && errors.nombreProducto) { %>
 					<div class="error-msg"><%= errors.nombreProducto.msg %></div>
 				   <% } %>
 				   <br>
 
 				<label for="descripcion">Descripción:</label><br>
-				<textarea id="descripcion" name="descripcion" rows="4" cols="50" value="<%= locals.oldData && oldData.descripcion ? oldData.descripcion : null %>"></textarea><br>
+				<textarea id="descripcion" name="descripcion" rows="4" cols="50" value="<%= locals.oldData && oldData.descripcion ? oldData.descripcion : "" %>"></textarea><br>
 				<% if (locals.errors && errors.descripcion) { %>
 					<div class="error-msg"><%= errors.descripcion.msg %></div>
 				   <% } %>

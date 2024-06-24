@@ -11,5 +11,7 @@ router.get("/:id/edit",productController.edit)
 router.post("/:id/update",productController.update)
 router.post("/comment/add",commentValidator, productController.addComment)
 router.get("/:id",productController.product)
+router.post("/:id/destroy", productController.destroy)
+
 
 module.exports = router;

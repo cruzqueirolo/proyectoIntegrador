@@ -11,20 +11,28 @@
 					<h2 class="products-title">
 						<%= product.nombreProducto %>
 					</h2>
+				
 				<ul class="productEdit">
-					<li class="product-detail-description">
-						<a href="/product/<%= product.id %>/edit">Editar</a>
-					</li>
-					<li class="product-detail-description">
-						<!--<a href="/product/destroy/<%= product.id %>">Eliminar</a> --> 
-					</li>
-				</ul>
+    <%if (typeof isOwner !== 'undefined' && isOwner) { %> <!-- Verifica si el usuario es el propietario -->
+        <li class="product-detail-description">
+            <a href="/product/<%= product.id %>/edit">Editar</a>
+        </li>
+        <li class="product-detail-description">
+			<form action="/product/<%= product.id %>/destroy" method="POST" >
+				<button type="submit">Eliminar</button>
+			</form>
+        </li>
+    <% } %>
+</ul>
 				</div>
 				<div class="product-detail">
 					<div class="row">
 						<article class="col-12 col-lg-8 product-detail-info">
 							<img src="/images/products/<%= product.imagen %>" alt="<%= product.nombreProducto %>"
-								class="product-detail-img">
+								class="product-detail-img"
+								onerror="this.onerror=null;this.src='/images/defaultprod.jpg'">
+								<!-- funcion oneerror para que si la foto no se craga se muestre una imagen default -->
+								
 							<p class="product-detail-description">
 								<%= product.descripcion %>
 							</p>
@@ -66,7 +74,7 @@
 									<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
 								</form>
 							<% } else { %>
-								<p class="product-detail-description">Debes estar <a href="/login">logueado</a> para agregar comentarios.</p>
+								<p class="product-detail-description">Debes estar <a href="/users/login">logueado</a> para agregar comentarios.</p>
 							<% } %>
 						</div>
 					</div>

@@ -14,7 +14,7 @@ const productController = {
                     include: [{
                         model: db.Usuarios,
                         as: 'usuario',
-                        attributes: ['usuario'] // Atributos que deseas obtener del usuario
+                        attributes: ['usuario'] 
                     }],
                     required: false
                 }
@@ -27,7 +27,8 @@ const productController = {
                         ...comentario.dataValues,
                         usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
                     }));
-                res.render("product", { product: data, comentarios, user: req.session.user , errors: []});
+                    const isOwner = req.session.user && req.session.user.id === data.idUsuario;
+                res.render("product", { product: data, comentarios, user: req.session.user , isOwner, errors: []});
             })
     },
     add: function (req, res) {
@@ -80,42 +81,52 @@ const productController = {
         });
     },
     
-    update: function(req,res){
+    update: function(req, res) {
         const id = req.params.id;
         const producto = req.body;
-        db.Productos.update(producto,{
-            where:{
-                id: id 
+    
+        db.Productos.update(producto, {
+            where: { id: id }
+        })
+        .then(() => {
+            return db.Productos.findByPk(id);
+        })
+        .then(prod => {
+            if (prod) {
+                const successMessage = "Producto actualizado correctamente";
+                res.redirect(`/product/${id}`);
+            } else {
+                return res.status(404).send("Producto no encontrado");
             }
         })
-            .then(() => {
-                return db.Productos.findByPk(id)
-            })
-            .then( prod =>{
-                if (prod){
-                    const successMessage = "Producto actualizado correctamente"
-                    res.redirect(`/product/${id}`)
-                }
-            })
-            .catch(function(error){
-                console.log(error)
-            })
+        .catch(error => {
+            console.error('Error al actualizar el producto:', error);
+            res.status(500).send("Error al actualizar el producto");
+        });
     },
-    destroy: function (req,res){
-        let productoABorrar = req.params.id
-        if (req.session.id == req.user.id)
-            db.Productos.destroy({
-            where:[
-                {id: productoABorrar}
-            ]
+    destroy: function(req, res) {
+        const id = req.params.id;
+    
+        // Eliminar comentarios asociados al producto
+        db.Comentarios.destroy({
+            where: { idProducto: id }
         })
-            .then(()=>{
-                return res.redirect(`/users/profile/${id}`)
-            })
-            .catch(error =>{
-                console.log(error)
-            }) 
-    },
+        .then(() => {
+            // Una vez eliminados los comentarios, eliminar el producto
+            return db.Productos.destroy({
+                where: { id: id }
+            });
+        })
+        .then(() => {
+            return res.redirect(`/users/profile/${req.session.user.id}`);
+        })
+        .catch(error => {
+            console.error('Error al eliminar el producto:', error);
+            res.status(500).send("Error al eliminar el producto");
+        });
+    }
+    
+    ,
     addComment: function(req, res) {
         const errors = validationResult(req);
 
@@ -143,6 +154,7 @@ const productController = {
 
             db.Comentarios.create(comment)
                 .then(() => {
+                    
                     return db.Productos.findByPk(info.productoId, {
                         include: [
                             { association: 'user' },
@@ -159,6 +171,7 @@ const productController = {
                         ]
                     });
                 })
+                
                 .then(product => {
                     if (!product) {
                         return res.status(404).render('error', { mensaje: 'Producto no encontrado' });

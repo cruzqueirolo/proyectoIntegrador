@@ -1,6 +1,10 @@
 <%- include('./partials/head') %>
 <body>
-	<%- include('./partials/headerLogueado') %>
+	<% if (locals.user !=null) { %>
+		<%- include('./partials/headerLogueado') %>
+			<% } else { %>
+				<%- include("./partials/header") %>
+					<% } %>
 	
 	<!-- Banner -->
 	<div class="banner">

@@ -29,13 +29,15 @@ const indexController = {
                 ]
             }
         })
-            .then(data => {
-                return res.render('search-results', {product: data});
-            })
-            .catch(error => {
-                console.error('Error al buscar el producto:', error);
-                res.status(500).render("error", { message: "Error al buscar el producto" });
-            });
+        .then(data => {
+            if (data.length === 0) {
+                // Si no se encontraron productos, renderiza la vista sin resultados
+                return res.render('search-results', { product: data, message: 'No se encontraron resultados' });
+            } else {
+                // Si se encontraron productos, renderiza la vista con los resultados
+                return res.render('search-results', { product: data });
+            }
+        })
     }
 }
 

@@ -345,12 +345,29 @@ hr {
   display: block;
   margin: auto;
 }
-
+.irLogin{
+  color: rgb(78, 78, 210);
+  font-weight: bolder;
+}
 .product-detail-info {
   border-right: 1px solid var(--light-gray);
   padding: 15px;
   /* height: 100%; */
 }
+.button-no-box {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  
+}
+.no-results-message {
+  font-size: 20px; 
+  text-align: center;
+  margin-top: 20px; 
+  color: #555; 
+  
+}
+
 .error-msg{
   color: red;
 }

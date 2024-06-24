@@ -2,7 +2,11 @@
 
 	<body>
 
-		<%- include('./partials/header') %>
+		<% if (locals.user !=null) { %>
+			<%- include('./partials/headerLogueado') %>
+				<% } else { %>
+					<%- include("./partials/header") %>
+						<% } %>
 
 
 			<!-- product detail -->
@@ -13,14 +17,15 @@
 					</h2>
 				
 				<ul class="productEdit">
-    <%if (typeof isOwner !== 'undefined' && isOwner) { %> <!-- Verifica si el usuario es el propietario -->
+    <%if (typeof isOwner !== 'undefined' && isOwner) { %> 
         <li class="product-detail-description">
             <a href="/product/<%= product.id %>/edit">Editar</a>
         </li>
         <li class="product-detail-description">
-			<form action="/product/<%= product.id %>/destroy" method="POST" >
-				<button type="submit">Eliminar</button>
+			<form action="/product/<%= product.id %>/destroy" method="POST">
+				<button type="submit" class="button-no-box">Eliminar</button>
 			</form>
+			
         </li>
     <% } %>
 </ul>
@@ -45,8 +50,17 @@
 									<% comentarios.forEach(function(comentario) { %>
 										<li class="product-detail-description">
 											<%= comentario.comentario %> -
-											<a href="/users/show/<%= comentario.idUsuario %>">
-												<%= comentario.usuario %>
+											<% if (typeof user === 'object' && comentario.idUsuario === user.id) { %>
+												<!-- el typeof para que si no esta logeado, se siga pasando user para que no se rompa -->
+												<a href="/users/profile/<%= comentario.idUsuario %>">
+													<%= comentario.usuario %>
+												</a>
+											<% } else { %>
+												<a href="/users/show/<%= comentario.idUsuario %>">
+													<%= comentario.usuario %>
+												</a>
+											<% } %>
+											
 											</a>
 										</li>
 									<% }); %>
@@ -74,7 +88,7 @@
 									<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
 								</form>
 							<% } else { %>
-								<p class="product-detail-description">Debes estar <a href="/users/login">logueado</a> para agregar comentarios.</p>
+								<p class="product-detail-description">Debes estar <a class="irLogin" href="/users/login">logueado</a> para agregar comentarios.</p>
 							<% } %>
 						</div>
 					</div>

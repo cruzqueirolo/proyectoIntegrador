@@ -12,6 +12,6 @@ router.post("/login",loginValidator,usersController.store_login);
 router.get("/logout",usersController.logout)
 router.get("/profile/:id",usersController.profile);
 router.get('/show/:id', usersController.userNotLoged);
-router.get('/edit/:id', usersController.editProfileForm);
-router.post('/edit/:id' ,usersController.profileEdit);
+router.get('/edit/:id',usersController.editProfileForm);
+router.post('/edit/:id',profileEditValidator  ,usersController.profileEdit);
 module.exports = router;

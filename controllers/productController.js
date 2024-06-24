@@ -60,8 +60,7 @@ const productController = {
                 return res.redirect("/users/profile/" + req.session.user.id);
             })
             .catch(error => {
-                console.error('Error al crear el producto:', error);
-                res.status(500).send("Error al crear el producto");
+                console.error(error);
             });
     },
 
@@ -71,13 +70,12 @@ const productController = {
         db.Productos.findByPk(id)
         .then(function(prod) {
             if (!prod) {
-                return res.status(404).send("Producto no encontrado");
+                return res.send("Producto no encontrado");
             }
             res.render('product-edit', { producto: prod, user: req.session.user });
         })
         .catch(function(error) {
-            console.error('Error al encontrar el producto:', error);
-            res.status(500).send("Error al encontrar el producto");
+            console.error(error);
         });
     },
     
@@ -93,15 +91,13 @@ const productController = {
         })
         .then(prod => {
             if (prod) {
-                const successMessage = "Producto actualizado correctamente";
                 res.redirect(`/product/${id}`);
             } else {
                 return res.status(404).send("Producto no encontrado");
             }
         })
         .catch(error => {
-            console.error('Error al actualizar el producto:', error);
-            res.status(500).send("Error al actualizar el producto");
+            console.error( error);
         });
     },
     destroy: function(req, res) {
@@ -121,8 +117,7 @@ const productController = {
             return res.redirect(`/users/profile/${req.session.user.id}`);
         })
         .catch(error => {
-            console.error('Error al eliminar el producto:', error);
-            res.status(500).send("Error al eliminar el producto");
+            console.error(error);
         });
     }
     
@@ -187,8 +182,7 @@ const productController = {
                     res.render('product', { product, comentarios, user: req.session.user, errors: [] });
                 })
                 .catch(error => {
-                    console.error('Error al agregar comentario:', error);
-                    res.status(500).render('error', { mensaje: 'Error al agregar el comentario' });
+                    console.error(error);
                 });
         }
     }

@@ -1,8 +1,11 @@
 <%- include('./partials/head') %>
 
 <body>
-	<%- include('./partials/headerLogueado') %>
-
+	<% if (locals.user !=null) { %>
+		<%- include('./partials/headerLogueado') %>
+			<% } else { %>
+				<%- include("./partials/header") %>
+					<% } %>
 	<!-- Novedades -->
 	<div class="container products-wrapper">
 		<div class="row">

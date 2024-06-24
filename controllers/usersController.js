@@ -39,10 +39,6 @@ store_register: function(req, res) {
         })
         .catch(function(error) {
             console.log(error);
-            res.status(500).render("register", { 
-                errors: { mensaje: "Error al registrar el usuario" },
-                oldData: req.body 
-            });
         });
 },
 
@@ -81,7 +77,6 @@ store_register: function(req, res) {
       }})
       .catch(function(error) {
         console.log(error);
-        res.status(500).send("Error interno del servidor"); 
       });
   },
   logout:function(req,res){
@@ -121,22 +116,25 @@ store_register: function(req, res) {
       })  
         .then(function(user) {
             if (user) {
-              res.render("profile", { user: user })
+              let totalComentarios = 0;
+              user.productos.forEach(producto => {
+                  totalComentarios += producto.comentarios.length;
+              });
+              res.render("profile", { user: user, totalComentarios: totalComentarios })
+
             }
         })
         .catch(function(error) {
             console.log(error);
-            let errors = { mensaje: "Error al buscar el usuario" };
-            res.render("profile", { errors: errors });
         });
 
  },
  profileEdit: function(req, res) {
-  // let errors = validationResult(req);
+  //  let errors = validationResult(req);
 
   // if (!errors.isEmpty()) {
   //   return res.status(400).render("profile-edit", { errors: errors.mapped(), oldData: req.body, user: { id: req.params.id } });
-  // }
+  //  } no lo pudimos hacer funcionar
   
   const userId = req.params.id;
   const userData = req.body;
@@ -159,12 +157,11 @@ store_register: function(req, res) {
       const successMessage = "Perfil actualizado correctamente";
       res.render("profile-edit", { user: user, successMessage: successMessage });
     } else {
-      res.status(404).send("Usuario no encontrado");
+      res.send("Usuario no encontrado");
     }
   })
   .catch(function(error){
     console.error(error);
-    res.status(500).send("Error al actualizar el perfil del usuario");
   });
 },
 
@@ -176,33 +173,51 @@ editProfileForm: function(req, res) {
     if (user) {
       res.render("profile-edit", { user: user});
     } else {
-      res.status(404).send("Usuario no encontrado");
+      res.send("Usuario no encontrado");
     }
   })
   .catch(function(error){
     console.error(error);
-    res.status(500).send("Error al cargar el formulario de edición del usuario");
   });
 },
 userNotLoged: function(req, res) {
-  const userId = req.params.id; 
+  const userIdNotLoged = req.params.id; 
 
-  db.Usuarios.findByPk(userId, {
-      include: [
-          { association: 'productos' }
-      ]
-  })
-  .then(function(user) {
-      if (user) {
-          res.render("user", { user: user }); 
+  db.Usuarios.findByPk(userIdNotLoged, {
+    include: [
+        {
+            model: db.Productos,
+            as: 'productos',
+            include: [
+                {
+                    model: db.Comentarios,
+                    as: 'comentarios',
+                    include: [
+                        {
+                            model: db.Usuarios,
+                            as: 'usuario',
+                            attributes: ['usuario']
+                        }
+                    ]
+                }
+            ],
+        }
+    ]
+})
+  .then(function(userNotLoged) {
+      if (userNotLoged) {
+        let totalComentarios = 0;
+        userNotLoged.productos.forEach(producto => {
+            totalComentarios += producto.comentarios.length;
+        });
+
+        res.render("user", { userNotLoged: userNotLoged, totalComentarios: totalComentarios });
       } else {
           res.status(404).send("Usuario no encontrado");
       }
   })
   .catch(function(error) {
       console.log(error);
-      let errors = { mensaje: "Error al buscar el usuario" };
-      res.status(500).render("user", { errors: errors });
   });
 },
 }

@@ -27,7 +27,6 @@
         </button>
 
         <nav class="main-navbar">
-            <% if (locals.user) { %>
                 <ul class="left-navbar">
                     <li><a href="/product/add">Cargar productos</a></li>
                 </ul>
@@ -43,19 +42,6 @@
                         </form>
                     </li>
                 </ul> 
-            <% } else { %>
-                <ul class="left-navbar">
-                    <li><a href="/">Todos los productos</a></li>
-                </ul>
-                <ul class="right-navbar">
-                    <li>
-                        <a href="/users/register">Creá tu cuenta <i class="far fa-address-card"></i></a>
-                    </li>
-                    <li>
-                        <a href="/users/login">Ingresá <i class="fas fa-sign-in-alt"></i></a>
-                    </li>
-                </ul>
-            <% } %>
         </nav>
     </div>
 </header>

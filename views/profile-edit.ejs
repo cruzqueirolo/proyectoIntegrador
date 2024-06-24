@@ -1,50 +1,55 @@
 <%- include('./partials/head') %>
 
-<body>
-	<% if (locals.user !=null) { %>
-		<%- include('./partials/headerLogueado') %>
-			<% } else { %>
-				<%- include("./partials/header") %>
-					<% } %>
-	<!-- Novedades -->
-	<div class="container products-wrapper">
-		<div class="row">
-			<div class="col-12">
-				<h2 class="products-title">Editar mi perfil</h2>
-			</div>
-			<!-- //no entendemos porque successMessage != undefined no funciona  -->
-			<% if (typeof successMessage !== "undefined") { %> 
-				<div class="alert-alert-success">
-				  <%= successMessage %>
-				</div>
-			  <% } %>
-			<br>
-			<div class="col-12">
-				<form action="/users/edit/<%= user.id %>" method="POST">
-				<label for="email">Email:</label><br>
-				<input type="email" id="email" name="email" value="<%= user.email %>"><br>
-		
-				<label for="usuario">Usuario:</label><br>
-				<input type="text" id="usuario" name="usuario" value="<%= user.usuario %>"required minlength="4"><br>
-			
-				<label for="contraseña">Contraseña:</label><br>
-				<input type="password" id="contrasenia" name="contrasenia" required minlength="4"><br>
-				
-				<label for="fechaNacimiento">Fecha de nacimiento:</label><br>
-				<input type="date" id="fecha" name="fecha" value="<%= user.fecha %>"><br>
-				
-				<label for="nroDocumento">Número de documento:</label><br>
-				<input type="number" id="dni" name="dni" value="<%= user.dni %>"><br><br>
-				
-				<label for="fotoPerfil">Foto de perfil (URL):</label><br>
-				<input type="text" id="fotoPerfil" name="fotoPerfil" value="<%= user.fotoPerfil %>"><br><br>
-				<button type="submit">Guardar cambios</button>
-				
-			</form>
-			
-			</div>
+	<body>
+		<% if (locals.user !=null) { %>
+			<%- include('./partials/headerLogueado') %>
+				<% } else { %>
+					<%- include("./partials/header") %>
+						<% } %>
+							<!-- Novedades -->
+							<div class="container products-wrapper">
+								<div class="row">
+									<div class="col-12">
+										<h2 class="products-title">Editar mi perfil</h2>
+									</div>
+									<!-- //no entendemos porque successMessage != undefined no funciona  -->
+									<% if (typeof successMessage !=="undefined" ) { %>
+										<div class="alert-alert-success">
+											<%= successMessage %>
+										</div>
+										<% } %>
+											<br>
+											<div class="col-12">
+												<form action="/users/edit/<%= user.id %>" method="POST">
+													<label for="email">Email:</label><br>
+													<input type="email" id="email" name="email"
+														value="<%= user.email %>"><br>
+
+													<label for="usuario">Usuario:</label><br>
+													<input type="text" id="usuario" name="usuario"
+														value="<%= user.usuario %>" required minlength="4"><br>
+
+													<label for="contraseña">Contraseña:</label><br>
+													<input type="password" id="contrasenia" name="contrasenia" required
+														minlength="4"><br>
+
+													<label for="fechaNacimiento">Fecha de nacimiento:</label><br>
+													<input type="date" id="fecha" name="fecha"
+														value="<%= user.fecha %>"><br>
+
+													<label for="nroDocumento">Número de documento:</label><br>
+													<input type="number" id="dni" name="dni"
+														value="<%= user.dni %>"><br><br>
+
+													<label for="fotoPerfil">Foto de perfil (URL):</label><br>
+													<input type="text" id="fotoPerfil" name="fotoPerfil"
+														value="<%= user.fotoPerfil %>"><br><br>
+													<button type="submit">Guardar cambios</button>
+
+												</form>
+
+											</div>
 
 
-<%- include('./partials/footer') %>
-</body>
-
+											<%- include('./partials/footer') %>
+	</body>

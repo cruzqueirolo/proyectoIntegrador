@@ -1,48 +1,58 @@
 <%- include('./partials/head') %>
 
-<body>
-	<% if (locals.user !=null) { %>
-		<%- include('./partials/headerLogueado') %>
-			<% } else { %>
-				<%- include("./partials/header") %>
-					<% } %>
+	<body>
+		<% if (locals.user !=null) { %>
+			<%- include('./partials/headerLogueado') %>
+				<% } else { %>
+					<%- include("./partials/header") %>
+						<% } %>
 
-	<!-- Novedades -->
-	<div class="container products-wrapper">
-		<div class="row">
-			<div class="col-12">
-				<h2 class="products-title">Agregar productos</h2>
-			</div>
-			<!-- Show the "ultimos" products -->
-			<h2 class="col-12"> 
-			<form action="/product/add" method="POST">
-				<label for="imagen">Imagen:</label><br>
-				<input type="file" id="imagen" name="imagen" accept="image/*"><br>
-				<% if (locals.errors && errors.imagen) { %>
-					<div class="error-msg"><%= errors.imagen.msg %></div>
-				   <% } %>
-				   <br>
-				
-				<label for="nombreProducto">Nombre del producto:</label><br>
-				<input type="text" id="nombreProducto" name="nombreProducto" value="<%= locals.oldData && oldData.nombreProducto ? oldData.nombreProducto : "" %>"> <br>
-				<% if (locals.errors && errors.nombreProducto) { %>
-					<div class="error-msg"><%= errors.nombreProducto.msg %></div>
-				   <% } %>
-				   <br>
+							<!-- Novedades -->
+							<div class="container products-wrapper">
+								<div class="row">
+									<div class="col-12">
+										<h2 class="products-title">Agregar productos</h2>
+									</div>
+									<!-- Show the "ultimos" products -->
+									<h2 class="col-12">
+										<form action="/product/add" method="POST">
+											<label for="imagen">Imagen:</label><br>
+											<input type="file" id="imagen" name="imagen" accept="image/*"><br>
+											<% if (locals.errors && errors.imagen) { %>
+												<div class="error-msg">
+													<%= errors.imagen.msg %>
+												</div>
+												<% } %>
+													<br>
 
-				<label for="descripcion">Descripción:</label><br>
-				<textarea id="descripcion" name="descripcion" rows="4" cols="50" value="<%= locals.oldData && oldData.descripcion ? oldData.descripcion : "" %>"></textarea><br>
-				<% if (locals.errors && errors.descripcion) { %>
-					<div class="error-msg"><%= errors.descripcion.msg %></div>
-				   <% } %>
-				<br>
+													<label for="nombreProducto">Nombre del producto:</label><br>
+													<input type="text" id="nombreProducto" name="nombreProducto"
+														value="<%= locals.oldData && oldData.nombreProducto ? oldData.nombreProducto : "" %>">
+													<br>
+													<% if (locals.errors && errors.nombreProducto) { %>
+														<div class="error-msg">
+															<%= errors.nombreProducto.msg %>
+														</div>
+														<% } %>
+															<br>
 
-				<button type="submit"> Agregar Producto </button>
-			</form>
-			</h2>
+															<label for="descripcion">Descripción:</label><br>
+															<textarea id="descripcion" name="descripcion" rows="4"
+																cols="50"
+																value="<%= locals.oldData && oldData.descripcion ? oldData.descripcion : "" %>"></textarea><br>
+															<% if (locals.errors && errors.descripcion) { %>
+																<div class="error-msg">
+																	<%= errors.descripcion.msg %>
+																</div>
+																<% } %>
+																	<br>
+
+																	<button type="submit"> Agregar Producto </button>
+										</form>
+									</h2>
 
 
-			<%- include('./partials/footer') %>
-</body>
+									<%- include('./partials/footer') %>
+	</body>
 
-</html>
+	</html>

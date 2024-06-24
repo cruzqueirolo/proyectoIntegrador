@@ -32,7 +32,7 @@ body {
 body {
   font-family: var(--base-font-family);
   font-weight: 300;
-  background-image:url("../images/background.jpg") ;
+  background-image: url("../images/background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -45,7 +45,7 @@ ol {
   padding: 0;
 }
 
-h2{
+h2 {
   font-family: var(--base-font-titles);
 }
 
@@ -62,7 +62,7 @@ figure {
 
 img {
   width: 100%;
-  
+
 }
 
 input,
@@ -82,7 +82,7 @@ hr {
   background-color: white;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
   margin: 10px 10px 10px 10px;
-  
+
 
 }
 
@@ -147,7 +147,7 @@ hr {
   font-size: 1.5em;
 }
 
-.logout{
+.logout {
   background: transparent;
   border: 0px;
   cursor: pointer;
@@ -156,7 +156,7 @@ hr {
 
 }
 
-.logout:hover{
+.logout:hover {
   color: #1259c3;
 }
 
@@ -178,8 +178,8 @@ hr {
   margin: 0px 10px 0px 10px;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
 
-  
-  
+
+
 }
 
 
@@ -187,7 +187,7 @@ hr {
 .products-wrapper {
   margin-top: 30px;
   margin-bottom: 30px;
-  
+
 }
 
 .products-title {
@@ -212,7 +212,7 @@ hr {
   border-bottom: 1px solid var(--light-gray);
 }
 
-.product-box_image img{
+.product-box_image img {
   height: 250px;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
 }
@@ -285,16 +285,17 @@ hr {
   box-shadow: 0 0 5px var(--green);
 }
 
-.boton-submit{
+.boton-submit {
   padding-left: 15px;
 }
 
 /*====== Footer ======*/
 .main-footer {
-  background-color:whitesmoke;
+  background-color: whitesmoke;
   padding: 20px 0;
-  margin: 80px 10px 10px 10px ;
-  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.2); /* sombra */
+  margin: 80px 10px 10px 10px;
+  box-shadow: 2px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  /* sombra */
 }
 
 .footer-data {
@@ -336,24 +337,29 @@ hr {
   border-radius: 8px;
   overflow: hidden;
 }
-.alert-alert-success{
+
+.alert-alert-success {
   font-size: 15px;
   margin-left: 13px;
 }
+
 .product-detail-img {
   width: 70%;
   display: block;
   margin: auto;
 }
-.irLogin{
+
+.irLogin {
   color: rgb(78, 78, 210);
   font-weight: bolder;
 }
+
 .product-detail-info {
   border-right: 1px solid var(--light-gray);
   padding: 15px;
   /* height: 100%; */
 }
+
 .button-no-box {
   border: none;
   background-color: transparent;
@@ -362,17 +368,19 @@ hr {
   font-size: 1em;
   font-weight: 300;
 }
+
 .no-results-message {
-  font-size: 20px; 
+  font-size: 20px;
   text-align: center;
-  margin-top: 20px; 
-  color: #555; 
-  
+  margin-top: 20px;
+  color: #555;
+
 }
 
-.error-msg{
+.error-msg {
   color: red;
 }
+
 .product-detail-title {
   font-weight: 400;
   font-size: 2.8em;
@@ -384,13 +392,13 @@ hr {
   line-height: 1.5;
 }
 
-.comments-detail-description{
+.comments-detail-description {
   padding: 15px 15px 15px 15px;
   font-size: 1.8em;
   line-height: 1.5;
 }
 
-.comentarios{
+.comentarios {
   margin-bottom: 10px;
   display: flex;
   padding-left: 5px;
@@ -401,11 +409,13 @@ hr {
   font-size: 5.5em;
   margin: 10px 0;
 }
-.product-detail .form{
+
+.product-detail .form {
   padding: 0 15px;
   display: flex;
   flex-direction: column;
 }
+
 .small {
   font-size: 1.8em;
   color: var(--green);
@@ -463,35 +473,40 @@ hr {
 .action-button.edit {
   background-color: chocolate;
 }
+
 .action-button.delete {
   background-color: rgb(248, 69, 37);
 }
 
-.comments article{
+.comments article {
   margin-bottom: 7.5px;
   padding-bottom: 7.5px;
   border-bottom: 1px solid #dcdcdc;
   display: flex;
   justify-content: space-between;
 }
-.comments img{
+
+.comments img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-.comments .data{
+
+.comments .data {
   width: 85%;
-  
+
 }
-.comments p{
+
+.comments p {
   font-size: 1em;
   margin-top: 0;
 }
-.comments .user{
+
+.comments .user {
   font-size: 1.7em;
 }
 
-.productEdit{
+.productEdit {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -518,7 +533,7 @@ hr {
   padding: 0 15px;
 }
 
-.error{
+.error {
   color: rgb(209, 0, 0);
   font-size: 1.4em;
 }
@@ -530,22 +545,22 @@ textarea.form-input {
 }
 
 /*====== Profile ======*/
-.info-usuario{
+.info-usuario {
   border-bottom: 1px solid #ccc;
   padding-bottom: 30px;
   font-size: 16px;
 }
 
-.foto-perfil{
+.foto-perfil {
   border-radius: 50%;
 }
 
-.main-title{
+.main-title {
   font-size: 25px;
   margin-bottom: 10px;
 }
 
-.btn{
+.btn {
   background-color: #1259c3;
   padding: 10px 20px;
   border-radius: 4px;
@@ -562,7 +577,7 @@ textarea.form-input {
 
   .banner {
     height: 430px;
-    
+
   }
 
   .btn-toggle-navbar {

@@ -9,99 +9,114 @@
 						<% } %>
 
 
-			<!-- product detail -->
-			<div class="container products-wrapper">
-				<div class="d-flex align-items-center">
-					<h2 class="products-title">
-						<%= product.nombreProducto %>
-					</h2>
-					<ul class="productEdit">
-    					<%if (typeof isOwner !== 'undefined' && isOwner) { %> 
-       						<li class="product-detail-description">
-           						<a href="/product/edit/<%= product.id %>">Editar</a>
-        					</li>
-        					<li class="product-detail-description">
-								<form action="/product/<%= product.id %>/destroy" method="POST">
-									<button type="submit" class="button-no-box">Eliminar</button>
-								</form>
-        					</li>
-    					<% } %>
-					</ul>
-				</div>
-				<div class="product-detail">
-					<div class="row">
-						<article class="col-12 col-lg-8 product-detail-info">
-							<img src="/images/products/<%= product.imagen %>" alt="<%= product.nombreProducto %>"
-								class="product-detail-img"
-								onerror="this.onerror=null;this.src='/images/defaultprod.jpg'">
-								<!-- funcion oneerror para que si la foto no se craga se muestre una imagen default -->
-								
-							<p class="product-detail-description">
-								<%= product.descripcion %>
-							</p>
-							<p class="product-detail-description">
-								Producto cargado por <a href="/users/profile/<%= product.user.id %>"><%= product.user.usuario %></a>
-							</p>
-						</article>
-						<div class="col-12 col-lg-4">
-							<section class="comments">
-							<!-- ACA VAN LOS COMENTARIOS -->
-								<h2>Comentarios</h2>
-								<% if (comentarios && comentarios.length > 0) { %>
-								<ul>
-									<% comentarios.forEach(function(comentario) { %>
-										<li class="comments-detail-description">
-											<% if (typeof user === 'object' && comentario.idUsuario === user.id) { %>
-												<!-- el typeof para que si no esta logeado, se siga pasando user para que no se rompa -->
-												<a href="/users/profile/<%= comentario.idUsuario %>">
-													<img src="/images/users/<%= comentarios.usuario.fotoPerfil %>" alt="">
-													<%= comentario.usuario %></a>
-													- <%= comentario.comentario %>
-												
-											<% } else { %>
-												<a href="/users/show/<%= comentario.idUsuario %>">
-													<img src="/images/users/<%= comentario.fotoPerfil %>" alt="">
-													 <%= comentario.usuario %></a>
-													 - <%= comentario.comentario %>
-												
+							<!-- product detail -->
+							<div class="container products-wrapper">
+								<div class="d-flex align-items-center">
+									<h2 class="products-title">
+										<%= product.nombreProducto %>
+									</h2>
+									<ul class="productEdit">
+										<%if (typeof isOwner !=='undefined' && isOwner) { %>
+											<li class="product-detail-description">
+												<a href="/product/edit/<%= product.id %>">Editar</a>
+											</li>
+											<li class="product-detail-description">
+												<form action="/product/<%= product.id %>/destroy" method="POST">
+													<button type="submit" class="button-no-box">Eliminar</button>
+												</form>
+											</li>
 											<% } %>
-											
-											</a>
-										</li>
-									<% }); %>
-								</ul>
-								<% } else { %>
-									<p>No hay comentarios aún.</p>
-								<% } %>
-							</section>
-								<% if (user) { %>
-									<form class="form" action="/product/comment/add" method="POST">
-										<input type="hidden" name="productoId" value="<%= product.id %>">
-										<input type="hidden" name="productName" value="<%= product.nombreProducto %>">
-										<input type="hidden" name="productDescription" value="<%= product.descripcion %>">
-										<input type="hidden" name="productImage" value="<%= product.imagen %>">
-										<input type="hidden" name="comentarios" value='<%= JSON.stringify(comentarios) %>'>
-									
-									<input class="form-input" type="text" name="comentario" placeholder="Agregar comentario">
-									<% if (errors && errors.length > 0) { %>
-										<div class="error">
-											<% errors.forEach(function(error) { %>
-												<p class="error-text"><%= error.msg %></p>
-											<% }); %>
-										</div>
-									<% } %>
-									<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
-									</form>
-								<% } else { %>
-									<p class="comments-detail-description"> Debes estar <a class="irLogin" href="/users/login"> logueado </a> para agregar comentarios.</p>
-								<% } %>	
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /product detail -->
+									</ul>
+								</div>
+								<div class="product-detail">
+									<div class="row">
+										<article class="col-12 col-lg-8 product-detail-info">
+											<img src="/images/products/<%= product.imagen %>"
+												alt="<%= product.nombreProducto %>" class="product-detail-img"
+												onerror="this.onerror=null;this.src='/images/defaultprod.jpg'">
+											<!-- funcion oneerror para que si la foto no se craga se muestre una imagen default -->
 
-			<%- include('./partials/footer') %>
+											<p class="product-detail-description">
+												<%= product.descripcion %>
+											</p>
+											<p class="product-detail-description">
+												Producto cargado por <a href="/users/profile/<%= product.user.id %>">
+													<%= product.user.usuario %>
+												</a>
+											</p>
+										</article>
+										<div class="col-12 col-lg-4">
+											<section class="comments">
+												<!-- ACA VAN LOS COMENTARIOS -->
+												<h2>Comentarios</h2>
+												<% if (comentarios && comentarios.length> 0) { %>
+													<ul>
+														<% comentarios.forEach(function(comentario) { %>
+															<li class="comments-detail-description">
+																<% if (typeof user==='object' &&
+																	comentario.idUsuario===user.id) { %>
+																	<!-- el typeof para que si no esta logeado, se siga pasando user para que no se rompa -->
+																	<a
+																		href="/users/profile/<%= comentario.idUsuario %>">
+																		<%= comentario.usuario %> -
+																	</a>
+																	<%= comentario.comentario %>
+
+																		<% } else { %>
+																			<a
+																				href="/users/show/<%= comentario.idUsuario %>">
+																				<%= comentario.usuario %> -
+																			</a>
+																			<%= comentario.comentario %>
+
+																				<% } %>
+
+																					</a>
+															</li>
+															<% }); %>
+													</ul>
+													<% } else { %>
+														<p>No hay comentarios aún.</p>
+														<% } %>
+											</section>
+											<% if (user) { %>
+												<form class="form" action="/product/comment/add" method="POST">
+													<input type="hidden" name="productoId" value="<%= product.id %>">
+													<input type="hidden" name="productName"
+														value="<%= product.nombreProducto %>">
+													<input type="hidden" name="productDescription"
+														value="<%= product.descripcion %>">
+													<input type="hidden" name="productImage"
+														value="<%= product.imagen %>">
+													<input type="hidden" name="comentarios"
+														value='<%= JSON.stringify(comentarios) %>'>
+
+													<input class="form-input" type="text" name="comentario"
+														placeholder="Agregar comentario">
+													<% if (errors && errors.length> 0) { %>
+														<div class="error">
+															<% errors.forEach(function(error) { %>
+																<p class="error-text">
+																	<%= error.msg %>
+																</p>
+																<% }); %>
+														</div>
+														<% } %>
+															<button type="submit" class="buy-now-button">AGREGAR
+																COMENTARIO</button>
+												</form>
+												<% } else { %>
+													<p class="comments-detail-description"> Debes estar <a
+															class="irLogin" href="/users/login"> logueado </a> para
+														agregar comentarios.</p>
+													<% } %>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /product detail -->
+
+							<%- include('./partials/footer') %>
 
 	</body>
 

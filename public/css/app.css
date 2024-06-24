@@ -358,7 +358,9 @@ hr {
   border: none;
   background-color: transparent;
   cursor: pointer;
-  
+  font-family: var(--base-font-family);
+  font-size: 1em;
+  font-weight: 300;
 }
 .no-results-message {
   font-size: 20px; 
@@ -377,9 +379,24 @@ hr {
 }
 
 .product-detail-description {
-  padding: 15px 15px 15px 40px;
+  padding: 15px 15px 15px 20px;
   font-size: 1.8em;
   line-height: 1.5;
+}
+
+.comments-detail-description{
+  padding: 15px 15px 15px 15px;
+  font-size: 1.8em;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.comentarios{
+  margin-bottom: 10px;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .product-detail-price {
@@ -454,6 +471,7 @@ hr {
 .comments {
   padding: 30px 15px 15px 0;
 }
+
 .comments article{
   margin-bottom: 7.5px;
   padding-bottom: 7.5px;
@@ -471,7 +489,7 @@ hr {
   
 }
 .comments p{
-  font-size: 1.5em;
+  font-size: 1em;
   margin-top: 0;
 }
 .comments .user{
@@ -483,6 +501,7 @@ hr {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  font-family: var(--base-font-family);
 }
 
 /*====== Formularios ======*/

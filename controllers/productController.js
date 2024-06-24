@@ -20,16 +20,19 @@ const productController = {
                 }
             ]
         })
-            .then(function (data) {
-                const comentarios = data.comentarios
-                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    .map(comentario => ({
-                        ...comentario.dataValues,
-                        usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
-                    }));
-                    const isOwner = req.session.user && req.session.user.id === data.idUsuario;
+        .then(function (data) {
+            const comentarios = data.comentarios
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map(comentario => ({
+                    ...comentario.dataValues,
+                    usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
+                }));
+                const isOwner = req.session.user && req.session.user.id === data.idUsuario;
                 res.render("product", { product: data, comentarios, user: req.session.user , isOwner, errors: []});
-            })
+        })
+        .catch(function(error){
+            console.log(error);
+        })
     },
     add: function (req, res) {
         if (req.session.user == undefined) {

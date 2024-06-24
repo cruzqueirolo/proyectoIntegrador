@@ -18,7 +18,7 @@
 					<ul class="productEdit">
     					<%if (typeof isOwner !== 'undefined' && isOwner) { %> 
        						<li class="product-detail-description">
-           						<a href="/product/<%= product.id %>/edit">Editar</a>
+           						<a href="/product/edit/<%= product.id %>">Editar</a>
         					</li>
         					<li class="product-detail-description">
 								<form action="/product/<%= product.id %>/destroy" method="POST">
@@ -40,7 +40,7 @@
 								<%= product.descripcion %>
 							</p>
 							<p class="product-detail-description">
-								Producto cargado por <%= product.usuario %>
+								Producto cargado por <a href="/users/profile/<%= product.user.id %>"><%= product.user.usuario %></a>
 							</p>
 						</article>
 						<div class="col-12 col-lg-4">
@@ -54,15 +54,15 @@
 											<% if (typeof user === 'object' && comentario.idUsuario === user.id) { %>
 												<!-- el typeof para que si no esta logeado, se siga pasando user para que no se rompa -->
 												<a href="/users/profile/<%= comentario.idUsuario %>">
-													<img src="/images/users/<%= comentarios.usuario.fotoPerfil %>" alt=""><a href="/users/profile/<%= comentario.idUsuario %>"></a>
-													<p class="comentarios"> <%= comentario.usuario %></a></p>
-													<p class="comentarios"> - <%= comentario.comentario %></p>
+													<img src="/images/users/<%= comentarios.usuario.fotoPerfil %>" alt="">
+													<%= comentario.usuario %></a>
+													- <%= comentario.comentario %>
 												
 											<% } else { %>
-												<a href="/users/profile/<%= comentario.idUsuario %>">
-													<img src="/images/users/<%= comentario.fotoPerfil %>" alt=""><a href="/users/profile/<%= comentario.idUsuario %>"></a>
-													<p class="comentarios"> <%= comentario.usuario %></a></p>
-													<p class="comentarios"> - <%= comentario.comentario %></p>
+												<a href="/users/show/<%= comentario.idUsuario %>">
+													<img src="/images/users/<%= comentario.fotoPerfil %>" alt="">
+													 <%= comentario.usuario %></a>
+													 - <%= comentario.comentario %>
 												
 											<% } %>
 											

@@ -1,44 +1,48 @@
 <%- include('./partials/head') %>
 
-<body>
+    <body>
 
-    <% if (locals.user !=null) { %>
-        <%- include('./partials/headerLogueado') %>
-            <% } else { %>
-                <%- include("./partials/header") %>
-                    <% } %>
+        <% if (locals.user !=null) { %>
+            <%- include('./partials/headerLogueado') %>
+                <% } else { %>
+                    <%- include("./partials/header") %>
+                        <% } %>
 
-    <div class="container products-wrapper">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="products-title">Editar productos</h2>
-            </div>
-            <div class="col-12">
-                <form action="/product/<%= producto.id %>/update" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="imagen">Imagen:</label><br>
-                        <input type="file" id="imagen" name="imagen" accept="image/*"><br>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombreProducto">Nombre del producto:</label><br>
-                        <input type="text" id="nombreProducto" name="nombreProducto" value="<%= producto.nombreProducto %>"><br>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion">Descripción:</label><br>
-                        <textarea id="descripcion" name="descripcion" rows="4" cols="50"><%= producto.descripcion %></textarea><br>
-                    </div>
-                    <button type="submit">Editar Producto</button>
-                    <% if (typeof successMessage !== "undefined") { %>
-                        <div class="alert alert-success">
-                          <%= successMessage %>
-                        </div>
-                      <% } %>
-                </form>
-            </div>
-        </div>
-    </div>
+                            <div class="container products-wrapper">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="products-title">Editar productos</h2>
+                                    </div>
+                                    <div class="col-12">
+                                        <form action="/product/edit/<%= producto.id %>" method="POST">
+                                            <div class="form-group">
+                                                <label for="imagen">Imagen:</label><br>
+                                                <input type="text" id="imagen" name="imagen" accept="image/*"
+                                                    value="<%= producto.imagen %>"><br>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="nombreProducto">Nombre del producto:</label><br>
+                                                <input type="text" id="nombreProducto" name="nombreProducto"
+                                                    value="<%= producto.nombreProducto %>"><br>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descripcion">Descripción:</label><br>
+                                                <textarea id="descripcion" name="descripcion" rows="4"
+                                                    cols="50"><%= producto.descripcion %></textarea><br>
+                                            </div>
+                                            <button type="submit">Editar Producto</button>
+                                            <% if (typeof successMessage !=="undefined" ) { %>
+                                                <div class="alert alert-success">
+                                                    <%= successMessage %>
+                                                </div>
+                                                <% } %>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-    <%- include('./partials/footer') %>
+                            <%- include('./partials/footer') %>
 
-</body>
-</html>
+    </body>
+
+    </html>

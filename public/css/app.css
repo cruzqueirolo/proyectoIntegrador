@@ -388,8 +388,6 @@ hr {
   padding: 15px 15px 15px 15px;
   font-size: 1.8em;
   line-height: 1.5;
-  display: flex;
-  align-items: center;
 }
 
 .comentarios{
@@ -467,9 +465,6 @@ hr {
 }
 .action-button.delete {
   background-color: rgb(248, 69, 37);
-}
-.comments {
-  padding: 30px 15px 15px 0;
 }
 
 .comments article{

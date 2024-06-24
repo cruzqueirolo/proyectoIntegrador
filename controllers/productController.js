@@ -14,25 +14,25 @@ const productController = {
                     include: [{
                         model: db.Usuarios,
                         as: 'usuario',
-                        attributes: ['usuario'] 
+                        attributes: ['usuario']
                     }],
                     required: false
                 }
             ]
         })
-        .then(function (data) {
-            const comentarios = data.comentarios
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map(comentario => ({
-                    ...comentario.dataValues,
-                    usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
-                }));
+            .then(function (data) {
+                const comentarios = data.comentarios
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .map(comentario => ({
+                        ...comentario.dataValues,
+                        usuario: comentario.usuario ? comentario.usuario.usuario : 'Usuario desconocido'
+                    }));
                 const isOwner = req.session.user && req.session.user.id === data.idUsuario;
-                res.render("product", { product: data, comentarios, user: req.session.user , isOwner, errors: []});
-        })
-        .catch(function(error){
-            console.log(error);
-        })
+                res.render("product", { product: data, comentarios, user: req.session.user, isOwner, errors: [] });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     },
     add: function (req, res) {
         if (req.session.user == undefined) {
@@ -46,7 +46,7 @@ const productController = {
     store_add: function (req, res) {
         let errors = validationResult(req);
 
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             return res.status(400).render("product-add", { errors: errors.mapped(), oldData: req.body });
         }
         let info = req.body;
@@ -67,80 +67,80 @@ const productController = {
             });
     },
 
-    
-    edit: function(req, res) {
+
+    edit: function (req, res) {
         const id = req.params.id;
         db.Productos.findByPk(id)
-        .then(function(prod) {
-            if (!prod) {
-                return res.send("Producto no encontrado");
-            }
-            res.render('product-edit', { producto: prod, user: req.session.user });
-        })
-        .catch(function(error) {
-            console.error(error);
-        });
+            .then(function (prod) {
+                if (!prod) {
+                    return res.send("Producto no encontrado");
+                }
+                res.render('product-edit', { producto: prod, user: req.session.user });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     },
-    
-    update: function(req, res) {
+
+    update: function (req, res) {
         const id = req.params.id;
         const producto = req.body;
-    
         db.Productos.update(producto, {
             where: { id: id }
         })
-        .then(() => {
-            return db.Productos.findByPk(id);
-        })
-        .then(prod => {
-            if (prod) {
-                res.redirect(`/product/${id}`);
-            } else {
-                return res.status(404).send("Producto no encontrado");
-            }
-        })
-        .catch(error => {
-            console.error( error);
-        });
+            .then(() => {
+                return db.Productos.findByPk(id);
+            })
+            .then(prod => {
+                if (prod) {
+                    res.redirect(`/product/${id}`);
+                } else {
+                    return res.status(404).send("Producto no encontrado");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     },
-    destroy: function(req, res) {
+    destroy: function (req, res) {
         const id = req.params.id;
-    
+
         // Eliminar comentarios asociados al producto
         db.Comentarios.destroy({
             where: { idProducto: id }
         })
-        .then(() => {
-            // Una vez eliminados los comentarios, eliminar el producto
-            return db.Productos.destroy({
-                where: { id: id }
+            .then(() => {
+                // Una vez eliminados los comentarios, eliminar el producto
+                return db.Productos.destroy({
+                    where: { id: id }
+                });
+            })
+            .then(() => {
+                return res.redirect(`/users/profile/${req.session.user.id}`);
+            })
+            .catch(error => {
+                console.error(error);
             });
-        })
-        .then(() => {
-            return res.redirect(`/users/profile/${req.session.user.id}`);
-        })
-        .catch(error => {
-            console.error(error);
-        });
     }
-    
+
     ,
-    addComment: function(req, res) {
+    addComment: function (req, res) {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             const info = req.body;
             const comentarios = JSON.parse(info.comentarios);
 
-            return res.status(400).render('product', { 
-                product: { 
-                    id: info.productoId, 
-                    nombreProducto: info.productName, 
-                    descripcion: info.productDescription, 
-                    imagen: info.productImage }, 
+            return res.status(400).render('product', {
+                product: {
+                    id: info.productoId,
+                    nombreProducto: info.productName,
+                    descripcion: info.productDescription,
+                    imagen: info.productImage
+                },
                 comentarios: comentarios,
-                user: req.session.user, 
-                errors: errors.array() 
+                user: req.session.user,
+                errors: errors.array()
             });
         } else {
             const info = req.body;
@@ -152,7 +152,7 @@ const productController = {
 
             db.Comentarios.create(comment)
                 .then(() => {
-                    
+
                     return db.Productos.findByPk(info.productoId, {
                         include: [
                             { association: 'user' },
@@ -169,7 +169,7 @@ const productController = {
                         ]
                     });
                 })
-                
+
                 .then(product => {
                     if (!product) {
                         return res.status(404).render('error', { mensaje: 'Producto no encontrado' });
